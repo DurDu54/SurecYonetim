@@ -57,7 +57,7 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
         public async Task<YoneticiDashDto> GetYoneticiDashboardId()
         {
             //Admin Test
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
 
             var yonetici = await _projeYoneticiRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
 
@@ -70,7 +70,7 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
         public async Task<List<ProjeDto>> GetYoneticiDashboardProjeler()
         {
             //Admin Test
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
 
             var yoneticiId = await _projeYoneticiRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var projeEntity = await _projeRepository.GetAll().Where(q => q.ProjeYoneticisiId == yoneticiId.Id).Include(q => q.Musteri).Skip(0).Take(10).OrderByDescending(q => q.BaslamaTarihi).ToListAsync();
@@ -90,7 +90,7 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
         public async Task<List<GorevDto>> GetYoneticiDashboardGorevler()
         {
             //Admin Test
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
 
             var yoneticiId = await _projeYoneticiRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
 
@@ -117,7 +117,7 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
         public async Task<List<MusteriIstekDto>> GetYoneticiDashboardMusteriTalepler()
         {
             //Admin Test
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
             var yoneticiId = await _projeYoneticiRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var entity = await _musteriIstekRepository.GetAll().Where(q=>q.proje.ProjeYoneticisiId==yoneticiId.Id).Include(q=>q.proje).Include(q=>q.Musteri).ToListAsync();
  
