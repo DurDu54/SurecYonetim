@@ -1,0 +1,58 @@
+<form class="form-horizontal" autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header
+    [title]="'Yeni Müşteri Ekle' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+    <div class="modal-body">
+        <tabset>
+            <tab [heading]="'Müşteri Detay' | localize" class="pt-3 px-2">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Müşteri Adı" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="musteriAdi" id="musteriAdi" [(ngModel)]="newMusteri.musteriAdi"
+                        #musteriAdiModel="ngModel" required maxlength="32">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "İletişim" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="iletisim" id="iletisim" [(ngModel)]="newMusteri.iletisim"
+                        #iletisimModel="ngModel" required maxlength="32">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Açıklama" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="aciklama" id="aciklama" [(ngModel)]="newMusteri.aciklama"
+                        #aciklamaModel="ngModel" required maxlength="32">
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "User Id" | localize }}
+                    </label>
+                    <!-- alttaki div ng select olacak -->
+                    <div class="col-md-9">
+                        <ng-select 
+                        [items]="listMusteri |async"
+                        [ngModelOptions]="{standalone: true}" 
+                        bindLabel="musteriName" autofocus
+                        bindValue="userId" 
+                        [(ngModel)]="newMusteri.userId" 
+                        #userIdModel="ngModel"></ng-select>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+    <abp-modal-footer
+    [cancelDisabled]="saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

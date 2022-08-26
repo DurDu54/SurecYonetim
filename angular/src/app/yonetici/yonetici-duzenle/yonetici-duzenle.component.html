@@ -1,0 +1,372 @@
+<form class="form-horizontal" autocomplete="off" #createProjeForm="ngForm" (ngSubmit)="save()">
+    <!-- <abp-modal-header
+    [title]="'CreateNewUser' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header> -->
+    <!-- <abp-modal-header [title]="'Yeni Proje Ekle' | localize"></abp-modal-header> -->
+    <!-- yoneticiId: number;
+    yoneticiName: string | undefined;
+    userName: string | undefined;
+    aciklama: string | undefined;
+    iletisim: string | undefined; -->
+    
+    <div >
+        <tabset>
+            
+            <tab [heading]="'Proje Yöneticisi' | localize" class="pt-3 px-2" id="tab1">
+                <div class="container mx-auto" >
+                    <h1>Profil sayfası</h1>
+                    <div class="form-group row justify-content-center required " >
+                        <label class="col-md-3 col-form-label" for="name">
+                            {{ "Yönetici Adı" | localize }}
+                        </label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="yoneticiName" id="yoneticiName"
+                                [(ngModel)]="yoneticiGuncelle.yoneticiAdi" #developerAdiModel="ngModel" required
+                                maxlength="32" value="{{yoneticiDetails.yoneticiName}}">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center required">
+                        <label class="col-md-3 col-form-label" for="name">
+                            {{ "Açıklama" | localize }}
+                        </label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="aciklama" id="aciklama"
+                                [(ngModel)]="yoneticiGuncelle.aciklama" #developerAdiModel="ngModel" required
+                                maxlength="32" value="{{yoneticiDetails.aciklama}}">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center required">
+                        <label class="col-md-3 col-form-label" for="name">
+                            {{ "İletişim" | localize }}
+                        </label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="iletisim" id="iletisim"
+                                [(ngModel)]="yoneticiGuncelle.iletisim" #developerAdiModel="ngModel" required
+                                maxlength="32" value="{{yoneticiDetails.iletisim}}">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center ">
+                        <label class="col-md-3 col-form-label" for="name">
+                            {{ "Kullanıcı Adı" | localize }}
+                        </label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="userName" id="userName" required
+                                maxlength="32" value="{{yoneticiDetails.userName}}" readonly>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <button type="button" class="btn btn-sm bg-primary" (click)="save()">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Guncelle" | localize }}
+                                    </button>
+                                </div>
+
+                                <!-- ******** Tablar sayesinde yapıldı ********* 
+                                  
+                                  <div class="col-md-3">
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="developerAta()">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Developer Ata" | localize }}
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-sm bg-secondary" >
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Proje Listele" | localize }}
+                                    </button>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="gorevAta()">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Görev Ata" | localize }}
+                                    </button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </tab>
+            <!-- Projelerim tabı -->
+                <tab [heading]="'Projelerim' | localize" class="pt-3 px-2" id="tab2">
+                    <section class="content-header">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-6">
+                              <h1>{{ "Proje" | localize }}</h1>
+                            </div>
+                            <div class="col-6 text-right">
+                              <a href="javascript:;" class="btn bg-blue" (click)="createProje()">
+                                <i class="fa fa-plus-square"></i>
+                                {{ "PROJE SEÇ" | localize }}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    <div class="container-fluid">
+                        <div class="card">
+                          <div class="card-header">
+                            <div class="row">
+                              <div class="col-md-6">&emsp;</div>
+                              <div class="col-md-6">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <button type="button" class="btn bg-blue">
+                                      <i class="fas fa-search"></i>
+                                    </button>
+                                  </div>
+                                  <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered">
+                                <thead class="bg-light">
+                                  <tr>
+                                    <th>{{ "Proje ID" | localize }}</th>
+                                    <th>{{ "Proje Adı" | localize }}</th>
+                                    <th>{{ "Açıklama" | localize }}</th>
+                                    <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let proje of projeler">
+                                    <td>{{proje.projeId}}</td>
+                                    <td>{{proje.projeAdi}}</td>
+                                    <td>{{proje.description}}</td>
+                                    <td>
+                                      <div>
+                                        <button type="button" class="btn btn-sm bg-primary  mx-2" (click)="developerSec(proje)">
+                                          <i class="fas fa-check"></i>
+                                          {{ "Developer Sec" | localize }}
+                                        </button>
+                                        <button type="button" class="btn btn-sm bg-danger  mx-2" (click)="ProjeBirak(proje)">
+                                          <i class="fas fa-window-close"></i>
+                                          {{ "Projeyi Bırak" | localize }}
+                                        </button>
+                                      </div>                                      
+                                    </td>
+                                  </tr>
+                    
+                    
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="card-footer table-card-footer bg-light border-top">
+                            <div class="row">
+                              <div class="col-sm-4 col-12 text-sm-left text-center">
+                                <button class="btn btn-secondary" (click)="ProjeListele()">
+                                  <i class="fas fa-redo-alt"></i>
+                                </button>
+                              </div>
+                              <div class="col-sm-4 col-12 text-center">
+                                <p class="mb-0 my-2">
+                                  
+                                </p>
+                              </div>
+                              <div class="col-sm-4 col-12">
+                                <div class="float-sm-right m-auto">
+                                  <abp-pagination-controls id="server">
+                                  </abp-pagination-controls>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            </tab>    
+                    <!-- Developerlarım Tabı -->
+             <tab [heading]="'Developerlarım' | localize" class="pt-3 px-2" id="tab3">
+              <section class="content-header">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-6">
+                        <h1>{{ "Developer" | localize }}</h1>
+                      </div>
+                      <div class="col-6 text-right">
+                        <a href="javascript:;" class="btn bg-blue" (click)="developerAta()">
+                          <i class="fa fa-plus-square"></i>
+                          {{ "DEVELOPER SEÇ" | localize }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              <div class="container-fluid">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-md-6">&emsp;</div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button type="button" class="btn bg-blue">
+                                <i class="fas fa-search"></i>
+                              </button>
+                            </div>
+                            <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                          <thead class="bg-light">
+                            <tr>
+                              <th>{{ "Developer ID" | localize }}</th>
+                              <th>{{ "Developer Adı" | localize }}</th>
+                              <th>{{ "Uzmanlığı" | localize }}</th>
+                              <th style="width: 170px;">
+                                {{ "Actions" | localize }}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let developer of developerlar">
+                              <td>{{developer.developerId}}</td>
+                              <td>{{developer.developerName}}</td>
+                              <td>{{developer.developerSide}}</td>
+                              <td>
+                                
+                                <button type="button" class="btn btn-sm bg-danger mx-2 "  (click)="DeveloperBirak(developer)"> 
+                                  <i class="fas fa-window-close"></i>
+                                  {{ "Developer Bırak" | localize }}
+                                </button>
+                                <button type="button" class="btn btn-sm bg-primary mx-2 "  (click)="gorevEkle(developer)"> 
+                                  <i class="fas fa-check"></i>
+                                  {{ "Gorev Ekle" | localize }}
+                                </button>
+                              </td>
+                            </tr>
+              
+              
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="card-footer table-card-footer bg-light border-top">
+                      <div class="row">
+                        <div class="col-sm-4 col-12 text-sm-left text-center">
+                          <button class="btn btn-secondary" (click)="DeveloperListele()">
+                            <i class="fas fa-redo-alt"></i>
+                          </button>
+                        </div>
+                        <div class="col-sm-4 col-12 text-center">
+                          <p class="mb-0 my-2">
+                            
+                          </p>
+                        </div>
+                        <div class="col-sm-4 col-12">
+                          <div class="float-sm-right m-auto">
+                            <abp-pagination-controls id="server">
+                            </abp-pagination-controls>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </tab>
+
+            <tab [heading]="'Gorevler' | localize" class="pt-3 px-2" id="tab4">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-6">
+                <h1>{{ "Görevler" | localize }}</h1>
+              </div>             
+            </div>
+          </div>
+        </section>
+        <section class="content px-2">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-6">&emsp;</div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <button type="button"
+                          class="btn bg-blue">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                      <input type="text"
+                        class="form-control"
+                        name="keyword"
+                        [placeholder]="'SearchWithThreeDot' | localize" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered">
+                    <thead class="bg-light">
+                      <tr>
+                        <th>{{ "Görev Tanımı" | localize }}</th>
+                        <th>{{ "Proje Adı" | localize }}</th>
+                        <th>{{"Developer Adı"| localize}}</th>
+                        <th>{{"Görev Durumu" | localize}}</th>
+                        <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     <tr  *ngFor = "let gorev of gorevler">
+                      <!-- <td>{{gorev.gorevId}}</td> -->
+                      <td>{{gorev.gorevTanimi}}</td>
+                      <td>{{gorev.projeAdi}}</td>
+                      <td >{{gorev.developerName}}</td>
+                      <td>{{gorev.durum}}</td>
+                      <td>                        
+                        <button type="button" (click)="delete(gorev)"
+                          class="btn btn-sm bg-danger mx-2">
+                          <i class="fas fa-trash"></i>
+                          {{ "Delete" | localize }}
+                        </button>
+                      </td>
+                     </tr> 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer table-card-footer bg-light border-top">
+                <div class="row">
+                  <div class="col-sm-4 col-12 text-sm-left text-center">
+                    <button class="btn btn-secondary" (click)="GorevListele()">
+                      <i class="fas fa-redo-alt"></i>
+                    </button>
+                  </div>
+                  <div class="col-sm-4 col-12 text-center">
+                    <p class="mb-0 my-2">
+                      
+                    </p>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                    <div class="float-sm-right m-auto">
+                      <abp-pagination-controls id="server">
+                      </abp-pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>      
+          </tab>
+        </tabset>
+        <!-- <abp-modal-footer
+        [cancelDisabled]="saving"
+        (onCancelClick)="bsModalRef.hide()"
+      ></abp-modal-footer> -->
+    </div>
+</form>

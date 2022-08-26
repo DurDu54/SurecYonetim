@@ -1,0 +1,37 @@
+<!-- 
+
+  
+  -->
+  <form class="form-horizontal" autocomplete="off" #createProjeForm="ngForm"   (ngSubmit)="save()">
+    <abp-modal-header
+    [title]="'Developer Seç' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+    <!-- <abp-modal-header [title]="'Yeni Proje Ekle' | localize"></abp-modal-header> -->
+    <div class="modal-body">
+        <tabset>
+            <tab [heading]="'Developer Seç' | localize" class="pt-3 px-2">
+                
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="developerId">
+                        {{ "Developer" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <ng-select 
+                        [items]="developerlar"
+                        [ngModelOptions]="{standalone: true}" 
+                        bindLabel="developerName" autofocus
+                        bindValue="developerId" 
+                        [(ngModel)]="newDev.developerId" 
+                        #userIdModel="ngModel"></ng-select>
+                    </div>
+                </div>
+                        
+            </tab>            
+        </tabset>
+        <abp-modal-footer
+        [cancelDisabled]="saving"
+        (onCancelClick)="bsModalRef.hide()"
+      ></abp-modal-footer>
+    </div>
+</form>

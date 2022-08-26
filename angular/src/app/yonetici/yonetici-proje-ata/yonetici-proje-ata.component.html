@@ -1,0 +1,68 @@
+<section class="content px-2">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6">&emsp;</div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <button type="button" class="btn bg-blue">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+                <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+              <thead class="bg-light">
+                <tr>
+                  <th>{{ "Proje Adı" | localize }}</th>
+                  <th>{{ "Açıklama" | localize }}</th>
+                  <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let proje of projeler">
+                  <td>{{proje.projeAdi}}</td>
+                  <td>{{proje.description}}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm bg-primary mx-2" (click)="projeAlCagir(proje)" >
+                      <i class="fas fa-trash"></i>
+                      {{ "Projeyi Al" | localize }}
+                    </button>
+                  </td>
+                </tr>
+  
+  
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer table-card-footer bg-light border-top">
+          <div class="row">
+            <div class="col-sm-4 col-12 text-sm-left text-center">
+              <button class="btn btn-secondary" >
+                <i class="fas fa-redo-alt"></i>
+              </button>
+            </div>
+            <div class="col-sm-4 col-12 text-center">
+              <p class="mb-0 my-2">
+                
+              </p>
+            </div>
+            <div class="col-sm-4 col-12">
+              <div class="float-sm-right m-auto">
+                <abp-pagination-controls id="server">
+                </abp-pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,196 @@
+<form class="form-horizontal" autocomplete="off" #createProjeForm="ngForm" (ngSubmit)="save()">
+    <!-- <abp-modal-header
+    [title]="'CreateNewUser' | localize"
+    (onCloseClick)="bsModalRef.hide()" 
+
+
+    musteriId: number | undefined;
+    musteriAdi: string | undefined;
+    iletisim: string | undefined;
+    aciklama: string | undefined;
+
+
+  ></abp-modal-header> -->
+    <!-- <abp-modal-header [title]="'Yeni Proje Ekle' | localize"></abp-modal-header> -->
+    
+    <div class="body">
+        <tabset>
+            <tab [heading]="'Musteri' | localize" class="pt-3 px-2">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Musteri Adı" | localize }}
+                    </label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="musteriAdi" id="musteriAdi"
+                        [(ngModel)]="musteriGuncelle.musteriAdi"
+                        #developerAdiModel="ngModel" 
+                        required maxlength="32"
+                         value="{{musteriDetails.musteriAdi}}" >
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "İletişim" | localize }}
+                    </label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="iletisim" id="iletisim"
+                        [(ngModel)]="musteriGuncelle.iletisim"
+                        #developerAdiModel="ngModel"
+                        required maxlength="32" 
+                        value="{{musteriDetails.iletisim}}" >
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Açıklama" | localize }}
+                    </label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="aciklama" id="aciklama"
+                        [(ngModel)]="musteriGuncelle.aciklama"
+                        #developerAdiModel="ngModel"
+                        required maxlength="32" value="{{musteriDetails.aciklama}}" >
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Kullanıcı Adı" | localize }}
+                    </label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="userName" id="userName"
+                        required maxlength="32" value="{{musteriDetails.username}}" readonly>
+                    </div>
+                </div>                              
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-sm bg-primary" (click)="save()">
+                                    <i class="fas fa-pencil-alt" ></i>
+                                    {{ "Guncelle" | localize }}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-sm bg-secondary">
+                                    <i class="fas fa-pencil-alt" ></i>
+                                    {{ "Talepleri Gör" | localize }}
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-sm bg-secondary">
+                                    <i class="fas fa-pencil-alt" ></i>
+                                    {{ "Projeleri Gör" | localize }}
+                                </button>                    
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </tab>
+            <tab [heading]="'Istekler' | localize" class="pt-3 px-2">
+                <section class="content-header">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-6">
+                          <h1>{{ "Istek" | localize }}</h1>
+                        </div>
+                        <div class="col-6 text-right">
+                          <a href="javascript:;" class="btn bg-blue" (click)="createIstek()">
+                            <i class="fa fa-plus-square"></i>
+                            {{ "Create" | localize }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                <div class="container-fluid">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-md-6">&emsp;</div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <button type="button" class="btn bg-blue">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </div>
+                              <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- projeId: number;
+                        proje: Proje;
+                        projeAdi: string | undefined;
+                        musteriIstekId: number;
+                        musteriAdi: string | undefined;
+                        musteri: Musteri;
+                        musteriIstek: string | undefined;
+                        musteriAciklama: string | undefined;
+                        baslangicTarih: moment.Moment;
+                        bitisTarih: moment.Moment; -->
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered">
+                            <thead class="bg-light">
+                              <tr>                                
+                                <th>{{ "Istek" | localize }}</th>
+                                <th>{{ "Açıklama" | localize }}</th>
+                                <th>{{ "Proje Adı" | localize }}</th>
+                                <th>{{ "Başlangıç Tarihi" | localize }}</th>
+                                <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let istek of istekler">
+                                <td>{{istek.musteriIstek}}</td>
+                                <td>{{istek.musteriAciklama}}</td>
+                                <td>{{istek.projeAdi}}</td>
+                                <td>{{istek.baslangicTarih}}</td>
+                                <td>
+                                  <a type="button" class="btn btn-sm bg-secondary" (click)="editIstek(istek)">                                    
+                                    <i class="fas fa-pencil-alt"></i>
+                                    {{ "Edit" | localize }}
+                                  </a>
+                                  <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(istek)">
+                                    <i class="fas fa-trash"></i>
+                                    {{ "Delete" | localize }}
+                                  </button>
+                                </td>
+                              </tr>
+                
+                
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="card-footer table-card-footer bg-light border-top">
+                        <div class="row">
+                          <div class="col-sm-4 col-12 text-sm-left text-center">
+                            <button class="btn btn-secondary" (click)="refresh()">
+                              <i class="fas fa-redo-alt"></i>
+                            </button>
+                          </div>
+                          <div class="col-sm-4 col-12 text-center">
+                            <p class="mb-0 my-2">
+                              
+                            </p>
+                          </div>
+                          <div class="col-sm-4 col-12">
+                            <div class="float-sm-right m-auto">
+                              <abp-pagination-controls id="server">
+                              </abp-pagination-controls>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </tab>
+        </tabset>
+        <!-- <abp-modal-footer
+        [cancelDisabled]="saving"
+        (onCancelClick)="bsModalRef.hide()"
+      ></abp-modal-footer> -->
+    </div>
+</form>
