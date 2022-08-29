@@ -1,4 +1,6 @@
 import { Component,EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { GorevDto, MusteriDashDto, MusteriDashboardServiceProxy, MusteriDto, MusteriGuncelleDto, MusteriIstekDto, MusteriServiceProxy, ProjeDto } from '@shared/service-proxies/service-proxies';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -20,13 +22,13 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
   musteribilgiler:MusteriDto[]=[];
   musteriDetails= new MusteriDto;
   countProject : number;
-  countTask:number;
   countMusteriIstek: number;
   Id : number;
   constructor(
      injector:Injector,
+     private router: Router,
      private _musteriServiceProxy:MusteriServiceProxy,
-     private _dashboardServiceProxy : MusteriDashboardServiceProxy,
+    private _dashboardServiceProxy : MusteriDashboardServiceProxy,
     private _modalService: BsModalService,
     ) {
    super(injector)}
@@ -41,6 +43,7 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
         this.Id=this.musteri.musteriId;
         this.getProjeler();
         this.getMusteriTalep();
+        this.getMiniProfile(this.Id);
       }
       
     )
@@ -77,7 +80,19 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
     )
   }
   goMyProfile(){
-    console.log("Profile Gidildi!");
+    this.router.navigateByUrl('app/profile/'+this.Id+'/1');
+  }
+  goMyProject(){
+    console.log("Projeye Gidildi")
+  }
+  goMyDeveloper(){
+    console.log("Projeye Gidildi")
+  }
+  goMyTasks(){
+    console.log("Projeye Gidildi")
+  }
+  goMyCustomerTasks(){
+    console.log("Projeye Gidildi")
   }
 
 }

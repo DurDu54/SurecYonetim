@@ -83,6 +83,7 @@ import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard
     AppComponent,
     HomeComponent,
     AboutComponent,
+    
     // tenants
     TenantsComponent,
     CreateTenantDialogComponent,
