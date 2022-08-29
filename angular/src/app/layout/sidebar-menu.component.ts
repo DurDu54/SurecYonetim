@@ -121,6 +121,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-users',
                 'Pages.Deneme'
             ),
+            new MenuItem(
+                this.l('Musteri Dashboard'),
+                '/app/musteri-dashboard',
+                'fas fa-users',
+                'Pages.Deneme'
+            ),
         ];
     }
 
