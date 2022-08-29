@@ -10,6 +10,7 @@ namespace Acme.SimpleTaskApp.Yoneticiler.YoneticilerDto
     public class YoneticiDto
     {
         public int YoneticiId { get; set; }
+        public int UserId { get; set; }
         public string YoneticiName { get; set; }
         public string UserName { get; set; }
         public string Aciklama { get; set; }

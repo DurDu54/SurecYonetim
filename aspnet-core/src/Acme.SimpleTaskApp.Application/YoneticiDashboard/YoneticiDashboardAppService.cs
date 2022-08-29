@@ -6,6 +6,7 @@ using Acme.SimpleTaskApp.Projeler.Developers.DevelopersDto;
 using Acme.SimpleTaskApp.Projeler.Gorevler.GorevlerDtos;
 using Acme.SimpleTaskApp.Projeler.Musteriler.MusteriTalep;
 using Acme.SimpleTaskApp.Projeler.Projeler.ProjelerDtos;
+using Acme.SimpleTaskApp.Users.Dto;
 using Acme.SimpleTaskApp.YoneticiDashboard.YoneticiDashDtos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -54,6 +55,22 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
 
         }
 
+        public async Task<User> GetUserID( int userId)
+        {
+            var user = await _userRepository.GetAllIncluding(x=>x.Roles).FirstOrDefaultAsync(x=>x.Id == userId);
+            return user; 
+  
+        }
+        public async Task userGuncelle(UserDto input)
+        {
+            var user = await _userManager.GetUserByIdAsync(input.Id);
+            user.UserName = user.UserName;
+            user.IsActive = user.IsActive;
+            user.Name = input.Name;
+            user.Surname = input.Surname;
+            user.EmailAddress=input.EmailAddress;
+            await _userManager.UpdateAsync(user);
+        }
         public async Task<YoneticiDashDto> GetYoneticiDashboardId()
         {
             //Admin Test
