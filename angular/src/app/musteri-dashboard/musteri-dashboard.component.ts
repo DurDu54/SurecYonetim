@@ -80,7 +80,7 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
     )
   }
   goMyProfile(){
-    this.router.navigateByUrl('app/profile/'+this.Id+'/1');
+    this.router.navigateByUrl('app/profile/'+this.Id+'/2');
   }
   goMyProject(){
     console.log("Projeye Gidildi")

@@ -73,11 +73,7 @@ import { ProjeDurumEkleComponent } from './durum/proje-durum-ekle/proje-durum-ek
 import { GorevDurumEkleComponent } from './durum/gorev-durum-ekle/gorev-durum-ekle.component';
 import { YoneticiDashboardComponent } from './yonetici-dashboard/yonetici-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 
  

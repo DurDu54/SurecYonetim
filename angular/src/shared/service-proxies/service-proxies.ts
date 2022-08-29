@@ -5987,6 +5987,114 @@ export class YoneticiDashboardServiceProxy {
     }
 
     /**
+     * @param userId (optional) 
+     * @return Success
+     */
+    getUserID(userId: number | undefined): Observable<User> {
+        let url_ = this.baseUrl + "/api/services/app/YoneticiDashboard/GetUserID?";
+        if (userId === null)
+            throw new Error("The parameter 'userId' cannot be null.");
+        else if (userId !== undefined)
+            url_ += "userId=" + encodeURIComponent("" + userId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUserID(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUserID(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<User>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<User>;
+        }));
+    }
+
+    protected processGetUserID(response: HttpResponseBase): Observable<User> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = User.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<User>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    userGuncelle(body: UserDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/YoneticiDashboard/userGuncelle";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUserGuncelle(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUserGuncelle(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUserGuncelle(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(null as any);
+    }
+
+    /**
      * @return Success
      */
     getYoneticiDashboardId(): Observable<YoneticiDashDto> {
@@ -10684,6 +10792,7 @@ export interface IYoneticiDropDownDto {
 
 export class YoneticiDto implements IYoneticiDto {
     yoneticiId: number;
+    userId: number;
     yoneticiName: string | undefined;
     userName: string | undefined;
     aciklama: string | undefined;
@@ -10701,6 +10810,7 @@ export class YoneticiDto implements IYoneticiDto {
     init(_data?: any) {
         if (_data) {
             this.yoneticiId = _data["yoneticiId"];
+            this.userId = _data["userId"];
             this.yoneticiName = _data["yoneticiName"];
             this.userName = _data["userName"];
             this.aciklama = _data["aciklama"];
@@ -10718,6 +10828,7 @@ export class YoneticiDto implements IYoneticiDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["yoneticiId"] = this.yoneticiId;
+        data["userId"] = this.userId;
         data["yoneticiName"] = this.yoneticiName;
         data["userName"] = this.userName;
         data["aciklama"] = this.aciklama;
@@ -10735,6 +10846,7 @@ export class YoneticiDto implements IYoneticiDto {
 
 export interface IYoneticiDto {
     yoneticiId: number;
+    userId: number;
     yoneticiName: string | undefined;
     userName: string | undefined;
     aciklama: string | undefined;
