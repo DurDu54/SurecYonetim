@@ -2906,6 +2906,243 @@ export class MusteriServiceProxy {
 }
 
 @Injectable()
+export class MusteriDashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getMusteriDashboardId(): Observable<MusteriDashDto> {
+        let url_ = this.baseUrl + "/api/services/app/MusteriDashboard/GetMusteriDashboardId";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMusteriDashboardId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMusteriDashboardId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MusteriDashDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MusteriDashDto>;
+        }));
+    }
+
+    protected processGetMusteriDashboardId(response: HttpResponseBase): Observable<MusteriDashDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = MusteriDashDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MusteriDashDto>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getMusteriDashboardProjeler(): Observable<ProjeDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MusteriDashboard/GetMusteriDashboardProjeler";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMusteriDashboardProjeler(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMusteriDashboardProjeler(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ProjeDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ProjeDto[]>;
+        }));
+    }
+
+    protected processGetMusteriDashboardProjeler(response: HttpResponseBase): Observable<ProjeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProjeDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjeDto[]>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getMusteriDashboardMusteriTalepler(): Observable<MusteriIstekDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MusteriDashboard/GetMusteriDashboardMusteriTalepler";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMusteriDashboardMusteriTalepler(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMusteriDashboardMusteriTalepler(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MusteriIstekDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MusteriIstekDto[]>;
+        }));
+    }
+
+    protected processGetMusteriDashboardMusteriTalepler(response: HttpResponseBase): Observable<MusteriIstekDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(MusteriIstekDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MusteriIstekDto[]>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getMusteriDashboardMusteriBilgileri(): Observable<MusteriDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MusteriDashboard/GetMusteriDashboardMusteriBilgileri";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMusteriDashboardMusteriBilgileri(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMusteriDashboardMusteriBilgileri(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MusteriDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MusteriDto[]>;
+        }));
+    }
+
+    protected processGetMusteriDashboardMusteriBilgileri(response: HttpResponseBase): Observable<MusteriDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(MusteriDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<MusteriDto[]>(null as any);
+    }
+}
+
+@Injectable()
 export class ProjeServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -7857,6 +8094,49 @@ export interface IMusteri {
     aciklama: string | undefined;
     user: User;
     userId: number;
+}
+
+export class MusteriDashDto implements IMusteriDashDto {
+    musteriId: number;
+
+    constructor(data?: IMusteriDashDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.musteriId = _data["musteriId"];
+        }
+    }
+
+    static fromJS(data: any): MusteriDashDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MusteriDashDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["musteriId"] = this.musteriId;
+        return data;
+    }
+
+    clone(): MusteriDashDto {
+        const json = this.toJSON();
+        let result = new MusteriDashDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMusteriDashDto {
+    musteriId: number;
 }
 
 export class MusteriDropDownDto implements IMusteriDropDownDto {
