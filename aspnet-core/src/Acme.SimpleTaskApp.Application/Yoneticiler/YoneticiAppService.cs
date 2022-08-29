@@ -67,6 +67,7 @@ namespace Acme.SimpleTaskApp.Yoneticiler
             var Yonetici = new YoneticiDto();
 
             Yonetici.YoneticiId = entity.Id;
+            Yonetici.UserId = (int)entity.UserId;
             Yonetici.YoneticiName = entity.ProjeYoneticisiAdi;
             Yonetici.UserName=entity.User.UserName;
             Yonetici.Aciklama = entity.Aciklama;

@@ -96,8 +96,6 @@ export class YoneticiDashboardComponent extends AppComponentBase implements OnIn
 
   // sayfa yönlendirme metotları
   goMyProfile(){
-    // this.tabid=document.getElementById('tab1');
-    // window.location.href = ("'app/yonetici/yonetici-duzenle/'+this.Id+'#tab1'");
     this.router.navigateByUrl('app/profile/'+this.Id+'/1');
   }
   goMyProject(){
