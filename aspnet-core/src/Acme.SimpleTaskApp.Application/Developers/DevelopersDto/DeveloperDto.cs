@@ -45,7 +45,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers.DevelopersDto
 
                 if (this.Projeler.Count == 0) return "";
                 var test= this.Projeler.Aggregate("", (c, n) => c + " ; " + n.Adi );
-                return test.Remove(0, 1);
+                return test.Remove(0, 3);
             }
         }
         public List<DeveloperProjectsDto> Projeler { get; set; }

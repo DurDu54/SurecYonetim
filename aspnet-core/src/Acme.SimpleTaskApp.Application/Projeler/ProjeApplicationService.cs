@@ -63,7 +63,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
         {
             var entity = await _developerRepository.GetAll().Where(q => q.Id == developerId).Include(q => q.Projeler).FirstOrDefaultAsync();
             int id = (int)entity.ProjeId;
-            var projem = await _repository.GetAll().Where(q => q.Id == id).Skip(0).Take(15).ToListAsync();
+            var projem = await _repository.GetAll().Where(q => q.Id == id).Include(q=>q.ProjeYoneticisi).Skip(0).Take(15).ToListAsync();
 
             return projem.Select(e => new ProjeDto
             {
@@ -73,7 +73,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
                 BaslamaTarihi = e.BaslamaTarihi,
                 BitisTarihi = e.BitisTarihi,
                 Description = e.Description,
-
+                MusteriAdi="Yöneticiniz : "+e.ProjeYoneticisi.ProjeYoneticisiAdi,
                 ProjeDurum = e.ProjeDurum,
 
 
@@ -104,6 +104,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
                 BaslamaTarihi = e.BaslamaTarihi,
                 BitisTarihi = e.BitisTarihi,
                 Developers = developerList,
+                MusteriAdi="Benim Projem",
                 Description=e.Description,
 
                 ProjeDurum = e.ProjeDurum,
@@ -113,15 +114,16 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
 
         public async Task<List<ProjeDto>> GetProjeListForYonetici(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.ProjeYoneticisiId == id).ToListAsync();
+            var entity = await _repository.GetAll().Where(a => a.ProjeYoneticisiId == id).Include(a=>a.Musteri).ToListAsync();
             var developerList = new List<Developer>();           
 
             return entity.Select(e => new ProjeDto
             {
                 ProjeId = e.Id,
                 ProjeAdi = e.ProjeAdi,
+                Description=e.Description,
                 BaslamaTarihi = e.BaslamaTarihi,
-
+                MusteriAdi= e.Musteri.MusteriAdi,
                 ProjeDurum = e.ProjeDurum,
 
             }).ToList();

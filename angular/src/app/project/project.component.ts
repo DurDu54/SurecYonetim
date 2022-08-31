@@ -46,10 +46,18 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
 
   }
   getMyProjectDeveloper(id: number) {
-    
+    this._projeServiceProxy.getProjelistDeveloper(id).
+    subscribe((res)=>{
+      this.projeler = res;
+    })
   }
   getMyProjectMusteri(id: number) {
-    throw new Error('Method not implemented.');
+    this._projeServiceProxy.getProjeListMusteri(id).
+    subscribe((res)=>{
+      this.projeler = res;
+    })
+  
+
   }
   getMyProjectYonetici(id: number) {
     this._projeServiceProxy.getProjeListForYonetici(id).
