@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Acme.SimpleTaskApp.Projeler
 {
     [Table("Developers")]
-    public class Developer:FullAuditedEntity
+    public class Developer : FullAuditedEntity
     {
         public string DeveloperName { get; set; }
         public string DeveloperSide { get; set; }
@@ -23,7 +23,7 @@ namespace Acme.SimpleTaskApp.Projeler
         public ProjeYonetici Yonetici { get; set; }
         public int? YoneticiId { get; set; }
 
-        public Proje Proje { get; set; }
+        public ICollection<Proje> Projeler { get; set; }
 
         public int? ProjeId { get; set; }
 

@@ -20,7 +20,8 @@ namespace Acme.SimpleTaskApp.Projeler
         public int ProjeId { get; set; }
         [ForeignKey(nameof(DeveloperId))]
         public Developer Developer { get; set; }
-        public int? DeveloperId { get; set; }        
+        public int? DeveloperId { get; set; }
+        public string DeveloperName { get; set; }
         public string GorevTanimi { get; set; }
         public string GorevAciklama { get; set; }
         public DurumEnum Durum { get; set; }
