@@ -61,7 +61,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
 
         public async Task<List<ProjeDto>> getProjelistDeveloper(int developerId)
         {
-            var entity = await _developerRepository.GetAll().Where(q => q.Id == developerId).Include(q => q.Proje).FirstOrDefaultAsync();
+            var entity = await _developerRepository.GetAll().Where(q => q.Id == developerId).Include(q => q.Projeler).FirstOrDefaultAsync();
             int id = (int)entity.ProjeId;
             var projem = await _repository.GetAll().Where(q => q.Id == id).Skip(0).Take(15).ToListAsync();
 

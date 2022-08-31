@@ -143,7 +143,11 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             }
             else if (entity.ProjeId != null && entity.ProjeId > 0)
             {
-                developer.ProjeId = entity.ProjeId;
+                developer.Projeler = entity.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList();
                 //developer.ProjeAdi = entity.Projeler.ProjeAdi;
             }
 
@@ -177,6 +181,12 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperCommits = e.DeveloperCommits,
                 YoneticiId = e.YoneticiId,
                 YoneticiAdi = e.Yonetici.ProjeYoneticisiAdi,
+                Projeler = e.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList(),
+                ProjeAdlari = e.Projeler.Select(p => p.ProjeAdi).ToList(),
             }).ToList();
         }
 
@@ -193,8 +203,11 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
-                //ProjeAdi = e.Projeler.ProjeAdi,
-                ProjeId = e.ProjeId,
+                Projeler = e.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList(),
                 YoneticiAdi = e.Yonetici.ProjeYoneticisiAdi,
                 YoneticiId = e.YoneticiId,
             }).ToList();
@@ -213,7 +226,11 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
-                ProjeId = e.ProjeId,
+                Projeler = e.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList(),
                 //ProjeAdi=e.Proje.ProjeAdi,
                 YoneticiId = e.YoneticiId,
                 //YoneticiAdi=e.Yonetici.ProjeYoneticisiAdi,
@@ -222,7 +239,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
         public async Task<List<DeveloperDto>> GetDeveloperWithoutProje(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id && a.ProjeId == null).Include(a => a.Projeler).Include(a => a.User).ToListAsync();
+            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id).Include(a => a.Projeler).Include(a => a.User).ToListAsync();
 
             return entity.Select(e => new DeveloperDto
             {
@@ -232,11 +249,17 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
+                Projeler = e.Projeler.Select(p => new DeveloperProjectsDto
+                    {
+                        Adi = p.ProjeAdi,
+                        ProjectId = p.Id
+                    }).ToList(),
             }).ToList();
         }
 
         public async Task<List<DeveloperDropDownDto>> GetUserWithoutDeveloper()
         {
+            
             var entityUser = await _userManager.GetUsersInRoleAsync("Developer");
             var entity = await _repository.GetAll().Include(q => q.User).ToListAsync();
 
@@ -347,22 +370,27 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
         public async Task DeveloperProjeAtama(int projeId, int developerId)
         {
-            var entity = await _repository.GetAll().Where(q => q.Id == developerId).FirstOrDefaultAsync();
-            var projeEntity = await _projeRepository.GetAll().Where(q => q.Id == projeId).FirstOrDefaultAsync();
+            var developer = await _repository.GetAll().Where(q => q.Id == developerId).FirstOrDefaultAsync();
+            var proje = await _projeRepository.GetAll().Where(q => q.Id == projeId).FirstOrDefaultAsync();
 
-            if (entity == null)
-            {
-                throw new UserFriendlyException("Developer bulunamadı");
-            }
-            if (projeEntity == null)
-            {
-                throw new UserFriendlyException("Yönetici bulunamadı");
-            }
-            else if (projeEntity != null && entity != null)
-            {
-                entity.ProjeId = projeEntity.Id;
-                await _repository.UpdateAsync(entity);
-            }
+
+            developer.Projeler.Add(proje);
+
+
+
+            //if (entity == null)
+            //{
+            //    throw new UserFriendlyException("Developer bulunamadı");
+            //}
+            //if (projeEntity == null)
+            //{
+            //    throw new UserFriendlyException("Yönetici bulunamadı");
+            //}
+            //else if (projeEntity != null && entity != null)
+            //{
+            //    entity.ProjeId = projeEntity.Id;
+            //    await _repository.UpdateAsync(entity);
+            //}
 
         }
 

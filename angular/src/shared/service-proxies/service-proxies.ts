@@ -276,6 +276,185 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class DeveloperDashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getDeveloperDashboardId(): Observable<DeveloperDashDto> {
+        let url_ = this.baseUrl + "/api/services/app/DeveloperDashboard/GetDeveloperDashboardId";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDeveloperDashboardId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDeveloperDashboardId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DeveloperDashDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DeveloperDashDto>;
+        }));
+    }
+
+    protected processGetDeveloperDashboardId(response: HttpResponseBase): Observable<DeveloperDashDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = DeveloperDashDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DeveloperDashDto>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getDeveloperDashboardGorevler(): Observable<GorevDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/DeveloperDashboard/GetDeveloperDashboardGorevler";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDeveloperDashboardGorevler(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDeveloperDashboardGorevler(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GorevDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GorevDto[]>;
+        }));
+    }
+
+    protected processGetDeveloperDashboardGorevler(response: HttpResponseBase): Observable<GorevDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(GorevDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GorevDto[]>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getDeveloperDashboardProjeler(): Observable<ProjeDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/DeveloperDashboard/GetDeveloperDashboardProjeler";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDeveloperDashboardProjeler(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDeveloperDashboardProjeler(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ProjeDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ProjeDto[]>;
+        }));
+    }
+
+    protected processGetDeveloperDashboardProjeler(response: HttpResponseBase): Observable<ProjeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProjeDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjeDto[]>(null as any);
+    }
+}
+
+@Injectable()
 export class DevelopersServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6902,7 +7081,7 @@ export class Developer implements IDeveloper {
     userId: number;
     yonetici: ProjeYonetici;
     yoneticiId: number | undefined;
-    proje: Proje;
+    projeler: Proje[] | undefined;
     projeId: number | undefined;
 
     constructor(data?: IDeveloper) {
@@ -6931,7 +7110,11 @@ export class Developer implements IDeveloper {
             this.userId = _data["userId"];
             this.yonetici = _data["yonetici"] ? ProjeYonetici.fromJS(_data["yonetici"]) : <any>undefined;
             this.yoneticiId = _data["yoneticiId"];
-            this.proje = _data["proje"] ? Proje.fromJS(_data["proje"]) : <any>undefined;
+            if (Array.isArray(_data["projeler"])) {
+                this.projeler = [] as any;
+                for (let item of _data["projeler"])
+                    this.projeler.push(Proje.fromJS(item));
+            }
             this.projeId = _data["projeId"];
         }
     }
@@ -6960,7 +7143,11 @@ export class Developer implements IDeveloper {
         data["userId"] = this.userId;
         data["yonetici"] = this.yonetici ? this.yonetici.toJSON() : <any>undefined;
         data["yoneticiId"] = this.yoneticiId;
-        data["proje"] = this.proje ? this.proje.toJSON() : <any>undefined;
+        if (Array.isArray(this.projeler)) {
+            data["projeler"] = [];
+            for (let item of this.projeler)
+                data["projeler"].push(item.toJSON());
+        }
         data["projeId"] = this.projeId;
         return data;
     }
@@ -6989,7 +7176,7 @@ export interface IDeveloper {
     userId: number;
     yonetici: ProjeYonetici;
     yoneticiId: number | undefined;
-    proje: Proje;
+    projeler: Proje[] | undefined;
     projeId: number | undefined;
 }
 
@@ -7038,6 +7225,49 @@ export class DeveloperAlanDto implements IDeveloperAlanDto {
 export interface IDeveloperAlanDto {
     developerAlanId: number;
     developerAlani: string | undefined;
+}
+
+export class DeveloperDashDto implements IDeveloperDashDto {
+    developerId: number;
+
+    constructor(data?: IDeveloperDashDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.developerId = _data["developerId"];
+        }
+    }
+
+    static fromJS(data: any): DeveloperDashDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeveloperDashDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["developerId"] = this.developerId;
+        return data;
+    }
+
+    clone(): DeveloperDashDto {
+        const json = this.toJSON();
+        let result = new DeveloperDashDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDeveloperDashDto {
+    developerId: number;
 }
 
 export class DeveloperDropDownDto implements IDeveloperDropDownDto {
@@ -7098,7 +7328,10 @@ export class DeveloperDto implements IDeveloperDto {
     projeId: number | undefined;
     yoneticiId: number | undefined;
     projeAdi: string | undefined;
+    projeAdlari: string[] | undefined;
     yoneticiAdi: string | undefined;
+    readonly projeAdiTest: string | undefined;
+    projeler: DeveloperProjectsDto[] | undefined;
 
     constructor(data?: IDeveloperDto) {
         if (data) {
@@ -7121,7 +7354,18 @@ export class DeveloperDto implements IDeveloperDto {
             this.projeId = _data["projeId"];
             this.yoneticiId = _data["yoneticiId"];
             this.projeAdi = _data["projeAdi"];
+            if (Array.isArray(_data["projeAdlari"])) {
+                this.projeAdlari = [] as any;
+                for (let item of _data["projeAdlari"])
+                    this.projeAdlari.push(item);
+            }
             this.yoneticiAdi = _data["yoneticiAdi"];
+            (<any>this).projeAdiTest = _data["projeAdiTest"];
+            if (Array.isArray(_data["projeler"])) {
+                this.projeler = [] as any;
+                for (let item of _data["projeler"])
+                    this.projeler.push(DeveloperProjectsDto.fromJS(item));
+            }
         }
     }
 
@@ -7144,7 +7388,18 @@ export class DeveloperDto implements IDeveloperDto {
         data["projeId"] = this.projeId;
         data["yoneticiId"] = this.yoneticiId;
         data["projeAdi"] = this.projeAdi;
+        if (Array.isArray(this.projeAdlari)) {
+            data["projeAdlari"] = [];
+            for (let item of this.projeAdlari)
+                data["projeAdlari"].push(item);
+        }
         data["yoneticiAdi"] = this.yoneticiAdi;
+        data["projeAdiTest"] = this.projeAdiTest;
+        if (Array.isArray(this.projeler)) {
+            data["projeler"] = [];
+            for (let item of this.projeler)
+                data["projeler"].push(item.toJSON());
+        }
         return data;
     }
 
@@ -7167,7 +7422,10 @@ export interface IDeveloperDto {
     projeId: number | undefined;
     yoneticiId: number | undefined;
     projeAdi: string | undefined;
+    projeAdlari: string[] | undefined;
     yoneticiAdi: string | undefined;
+    projeAdiTest: string | undefined;
+    projeler: DeveloperProjectsDto[] | undefined;
 }
 
 export class DeveloperEkleDto implements IDeveloperEkleDto {
@@ -7286,6 +7544,53 @@ export interface IDeveloperGuncelleDto {
     projeId: number | undefined;
     developerCommits: number;
     yoneticiId: number | undefined;
+}
+
+export class DeveloperProjectsDto implements IDeveloperProjectsDto {
+    projectId: number;
+    adi: string | undefined;
+
+    constructor(data?: IDeveloperProjectsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.projectId = _data["projectId"];
+            this.adi = _data["adi"];
+        }
+    }
+
+    static fromJS(data: any): DeveloperProjectsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DeveloperProjectsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectId"] = this.projectId;
+        data["adi"] = this.adi;
+        return data;
+    }
+
+    clone(): DeveloperProjectsDto {
+        const json = this.toJSON();
+        let result = new DeveloperProjectsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDeveloperProjectsDto {
+    projectId: number;
+    adi: string | undefined;
 }
 
 export class DevelopersCommitDto implements IDevelopersCommitDto {
@@ -7670,7 +7975,6 @@ export interface IGetRoleForEditOutput {
 export class GorevDto implements IGorevDto {
     gorevId: number;
     gorevTanimi: string | undefined;
-    durum: DurumEnum;
     gorevDurum: string | undefined;
     gorevAciklama: string | undefined;
     developerId: number | undefined;
@@ -7694,7 +7998,6 @@ export class GorevDto implements IGorevDto {
         if (_data) {
             this.gorevId = _data["gorevId"];
             this.gorevTanimi = _data["gorevTanimi"];
-            this.durum = _data["durum"];
             this.gorevDurum = _data["gorevDurum"];
             this.gorevAciklama = _data["gorevAciklama"];
             this.developerId = _data["developerId"];
@@ -7718,7 +8021,6 @@ export class GorevDto implements IGorevDto {
         data = typeof data === 'object' ? data : {};
         data["gorevId"] = this.gorevId;
         data["gorevTanimi"] = this.gorevTanimi;
-        data["durum"] = this.durum;
         data["gorevDurum"] = this.gorevDurum;
         data["gorevAciklama"] = this.gorevAciklama;
         data["developerId"] = this.developerId;
@@ -7742,7 +8044,6 @@ export class GorevDto implements IGorevDto {
 export interface IGorevDto {
     gorevId: number;
     gorevTanimi: string | undefined;
-    durum: DurumEnum;
     gorevDurum: string | undefined;
     gorevAciklama: string | undefined;
     developerId: number | undefined;
@@ -8763,6 +9064,7 @@ export class Proje implements IProje {
     musteriBitisTarihi: moment.Moment;
     musteriId: number;
     musteri: Musteri;
+    developerlar: Developer[] | undefined;
     projeYoneticisi: ProjeYonetici;
     projeYoneticisiId: number | undefined;
     isDone: boolean;
@@ -8795,6 +9097,11 @@ export class Proje implements IProje {
             this.musteriBitisTarihi = _data["musteriBitisTarihi"] ? moment(_data["musteriBitisTarihi"].toString()) : <any>undefined;
             this.musteriId = _data["musteriId"];
             this.musteri = _data["musteri"] ? Musteri.fromJS(_data["musteri"]) : <any>undefined;
+            if (Array.isArray(_data["developerlar"])) {
+                this.developerlar = [] as any;
+                for (let item of _data["developerlar"])
+                    this.developerlar.push(Developer.fromJS(item));
+            }
             this.projeYoneticisi = _data["projeYoneticisi"] ? ProjeYonetici.fromJS(_data["projeYoneticisi"]) : <any>undefined;
             this.projeYoneticisiId = _data["projeYoneticisiId"];
             this.isDone = _data["isDone"];
@@ -8827,6 +9134,11 @@ export class Proje implements IProje {
         data["musteriBitisTarihi"] = this.musteriBitisTarihi ? this.musteriBitisTarihi.toISOString() : <any>undefined;
         data["musteriId"] = this.musteriId;
         data["musteri"] = this.musteri ? this.musteri.toJSON() : <any>undefined;
+        if (Array.isArray(this.developerlar)) {
+            data["developerlar"] = [];
+            for (let item of this.developerlar)
+                data["developerlar"].push(item.toJSON());
+        }
         data["projeYoneticisi"] = this.projeYoneticisi ? this.projeYoneticisi.toJSON() : <any>undefined;
         data["projeYoneticisiId"] = this.projeYoneticisiId;
         data["isDone"] = this.isDone;
@@ -8859,6 +9171,7 @@ export interface IProje {
     musteriBitisTarihi: moment.Moment;
     musteriId: number;
     musteri: Musteri;
+    developerlar: Developer[] | undefined;
     projeYoneticisi: ProjeYonetici;
     projeYoneticisiId: number | undefined;
     isDone: boolean;

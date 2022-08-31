@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { DeveloperDto, DeveloperGuncelleDto, DevelopersServiceProxy, GorevDto, GorevServiceProxy, ProjeDto, ProjeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DeveloperDto, DeveloperGuncelleDto, DeveloperProjectsDto, DevelopersServiceProxy, GorevDto, GorevServiceProxy, ProjeDto, ProjeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DeveloperProjeAtaComponent } from '../developer-proje-ata/developer-proje-ata.component';
 
@@ -21,6 +21,7 @@ export class DeveloperDuzenleComponent extends AppComponentBase implements OnIni
   developerDetails=new DeveloperDto;
   developerGuncelle:DeveloperGuncelleDto;
   gorevler:GorevDto[]=[];
+  projectByDeveloper : string;
   constructor(
     injector:Injector,
     private _developerServiceProxy:DevelopersServiceProxy,
@@ -43,6 +44,7 @@ export class DeveloperDuzenleComponent extends AppComponentBase implements OnIni
     this._developerServiceProxy.getDeveloperByDeveloperId(this.id)
       .subscribe((res)=>{
         this.developerDetails=res;
+        this.projectByDeveloper = this.developerDetails.projeAdiTest;
     });
   }
 

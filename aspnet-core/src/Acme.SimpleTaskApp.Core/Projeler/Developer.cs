@@ -12,6 +12,10 @@ namespace Acme.SimpleTaskApp.Projeler
     [Table("Developers")]
     public class Developer : FullAuditedEntity
     {
+        public Developer()
+        {
+            Projeler = new List<Proje>();
+        }
         public string DeveloperName { get; set; }
         public string DeveloperSide { get; set; }
         public int DeveloperCommits { get; set; }

@@ -37,8 +37,14 @@ namespace Acme.SimpleTaskApp.Projeler.Developers.DevelopersDto
         {
             get
             {
+
+                //var siraNo = 1;
+                //var projeno = siraNo.ToString().PadLeft(5,'a');
+                //üsttekiler soladeğer atayarak sağa istenilen değer yazar
+
+
                 if (this.Projeler.Count == 0) return "";
-                var test= this.Projeler.Aggregate("", (c, n) => c + ";" + n.Adi + ":" + n.ProjectId);
+                var test= this.Projeler.Aggregate("", (c, n) => c + " ; " + n.Adi );
                 return test.Remove(0, 1);
             }
         }

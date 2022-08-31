@@ -17,7 +17,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   rolid:number;
   userid:number;
 
-  projeler:ProjeDto;
+  projeler:ProjeDto[]=[];
 
   constructor(
     injector:Injector,
@@ -31,7 +31,6 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projeler=new ProjeDto();
 
     this.id = this.route.snapshot.params['id'];
     this.rolid = this.route.snapshot.params['rolid']
@@ -53,7 +52,10 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
     throw new Error('Method not implemented.');
   }
   getMyProjectYonetici(id: number) {
-    throw new Error('Method not implemented.');
+    this._projeServiceProxy.getProjeListForYonetici(id).
+    subscribe((res)=>{
+      this.projeler = res;
+    })
   }
 
 }
