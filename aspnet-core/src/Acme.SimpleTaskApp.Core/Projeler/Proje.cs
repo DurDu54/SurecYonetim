@@ -13,10 +13,9 @@ namespace Acme.SimpleTaskApp.Projeler
     
     public class Proje : FullAuditedEntity
     {
-        //id tanımlanmalı mı 
-       // public int ProjeId { get; set; }
+        
         public string ProjeAdi { get; set; }
-        public string Description { get; set; }       
+        public string Description { get; set; }
         public DurumEnum Durum { get; set; }
         public string ProjeDurum { get; set; }
         public DateTime BaslamaTarihi { get; set; }
@@ -25,9 +24,9 @@ namespace Acme.SimpleTaskApp.Projeler
         [ForeignKey(nameof(MusteriId))]
         public int MusteriId { get; set; }
         public Musteri Musteri { get; set; }
+        public virtual ICollection<Developer> Developerlar { get; set; }
         public ProjeYonetici ProjeYoneticisi { get; set; }
         public int? ProjeYoneticisiId { get; set; }
-
         public bool IsDone { get; set; }
 
     }

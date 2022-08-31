@@ -1,7 +1,7 @@
 ﻿using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Acme.SimpleTaskApp.Authorization;
-﻿using Abp.Domain.Repositories;
+using Abp.Domain.Repositories;
 using Abp.UI;
 using Acme.SimpleTaskApp.Developers.DevelopersDto;
 using Acme.SimpleTaskApp.Projeler.Developers.DevelopersDto;
@@ -18,7 +18,7 @@ using Acme.SimpleTaskApp.Authorization.Roles;
 namespace Acme.SimpleTaskApp.Projeler.Developers
 {
     [AbpAuthorize(PermissionNames.Pages_Developer)]
-    public class DevelopersAppService:IDevelopersAppService
+    public class DevelopersAppService : IDevelopersAppService
     {
         private readonly IRepository<Developer> _repository;
         private readonly IRepository<Gorev> _gorevRepository;
@@ -29,12 +29,12 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<DeveloperAlan> _developeralanrepository;
         public DevelopersAppService(IRepository<Developer> repository,
-            IRepository<DeveloperAlan>developeralanRepository,
+            IRepository<DeveloperAlan> developeralanRepository,
             IRepository<Gorev> gorevRepository,
-            IRepository<ProjeYonetici> yoneticiRepository, 
-            IRepository<Proje> projeRepository, 
-            UserManager userManager, 
-            IRepository<User, long> userRepository, 
+            IRepository<ProjeYonetici> yoneticiRepository,
+            IRepository<Proje> projeRepository,
+            UserManager userManager,
+            IRepository<User, long> userRepository,
             IRepository<Role> roles)
         {
             _repository = repository;
@@ -49,7 +49,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
         public async Task<List<DeveloperDto>> GetDeveloperList()
         {
-            var entity = await _repository.GetAll().Include(a => a.User).Include(q=>q.Proje).Skip(0).Take(10).ToListAsync();
+            var entity = await _repository.GetAll().Include(a => a.User).Include(q => q.Projeler).Skip(0).Take(10).ToListAsync();
 
             return entity.Select(e => new DeveloperDto
             {
@@ -60,6 +60,12 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
+                Projeler = e.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList(),
+                ProjeAdlari = e.Projeler.Select(p => p.ProjeAdi).ToList(),
             }
             ).ToList();
         }
@@ -68,25 +74,25 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
         {
             var entity = await _developeralanrepository.GetAll().Skip(0).Take(10).ToListAsync();
             return entity.Select(e => new DeveloperAlanDto
-            {   
+            {
                 DeveloperAlanId = e.Id,
                 DeveloperAlani = e.DeveloperAlani,
             }
             ).ToList();
         }
 
-        public async Task <DeveloperDto> GetDeveloperByUserId(long id)
+        public async Task<DeveloperDto> GetDeveloperByUserId(long id)
         {
-            var entity = await _repository.GetAll().Where(a => a.UserId == id).Include(a=>a.Proje).Include(a => a.User).FirstOrDefaultAsync();
+            var entity = await _repository.GetAll().Where(a => a.UserId == id).Include(a => a.Projeler).Include(a => a.User).FirstOrDefaultAsync();
             DeveloperDto developer = new DeveloperDto();
 
-            if(entity != null)
+            if (entity != null)
             {
                 developer.DeveloperName = entity.DeveloperName;
                 developer.UserId = entity.UserId;
                 developer.Username = entity.User.UserName;
                 developer.ProjeId = entity.ProjeId;
-                developer.ProjeAdi = entity.Proje.ProjeAdi;
+                developer.ProjeAdlari = entity.Projeler.Select(p => p.ProjeAdi).ToList();
                 developer.DeveloperCommits = entity.DeveloperCommits;
                 developer.DeveloperSide = entity.DeveloperSide;
                 developer.YoneticiId = entity.YoneticiId;
@@ -106,17 +112,17 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
             else if (entity == null)
             {
-                throw new UserFriendlyException("Developer bulunamadı");                
+                throw new UserFriendlyException("Developer bulunamadı");
             }
             return developer;
 
 
-            
+
 
         }
         public async Task<DeveloperDto> GetDeveloperByDeveloperId(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.Id == id).Include(a => a.Proje).Include(a=>a.Yonetici).Include(a => a.User).FirstOrDefaultAsync();
+            var entity = await _repository.GetAll().Where(a => a.Id == id).Include(a => a.Projeler).Include(a => a.Yonetici).Include(a => a.User).FirstOrDefaultAsync();
             if (entity == null)
             {
                 throw new UserFriendlyException("Developer Bulunamadı");
@@ -126,7 +132,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             developer.DeveloperName = entity.DeveloperName;
             developer.UserId = entity.UserId;
             developer.Username = entity.User.UserName;
-            
+
             developer.DeveloperCommits = entity.DeveloperCommits;
             developer.DeveloperSide = entity.DeveloperSide;
 
@@ -134,17 +140,19 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             {
                 developer.ProjeId = 0;
                 developer.ProjeAdi = "Proje Yok";
-            }else if(entity.ProjeId !=null && entity.ProjeId > 0)
+            }
+            else if (entity.ProjeId != null && entity.ProjeId > 0)
             {
                 developer.ProjeId = entity.ProjeId;
-                developer.ProjeAdi = entity.Proje.ProjeAdi;
+                //developer.ProjeAdi = entity.Projeler.ProjeAdi;
             }
 
             if (entity.YoneticiId == null || entity.YoneticiId == 0)
             {
                 developer.YoneticiId = 0;
                 developer.YoneticiAdi = "Yonetici Yok";
-            }else if(entity.YoneticiId != null && entity.YoneticiId > 0)
+            }
+            else if (entity.YoneticiId != null && entity.YoneticiId > 0)
             {
                 developer.YoneticiId = entity.YoneticiId;
                 developer.YoneticiAdi = entity.Yonetici.ProjeYoneticisiAdi;
@@ -155,7 +163,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
         public async Task<List<DeveloperDto>> GetDeveloperByYoneticiId(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id).Include(a => a.Proje).Include(q => q.User)
+            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id).Include(a => a.Projeler).Include(q => q.User)
                 .Include(a => a.Yonetici).ToListAsync();
 
             return entity.Select(e => new DeveloperDto
@@ -163,38 +171,18 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 UserId = e.UserId,
                 DeveloperId = e.Id,
                 Username = e.User.UserName,
-                ProjeId=e.ProjeId,
+                ProjeId = e.ProjeId,
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
-                YoneticiId=e.YoneticiId,
-                YoneticiAdi=e.Yonetici.ProjeYoneticisiAdi,
+                YoneticiId = e.YoneticiId,
+                YoneticiAdi = e.Yonetici.ProjeYoneticisiAdi,
             }).ToList();
         }
 
         public async Task<List<DeveloperDto>> GetDeveloperByProjeId(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.ProjeId == id).Include(a => a.Proje).Include(q=>q.User)
-                .Include(a=>a.Yonetici).ToListAsync();
-
-            return entity.Select(e => new DeveloperDto
-            {
-                UserId = e.UserId,
-                DeveloperId = e.Id,
-                Username = e.User.UserName,
-                DeveloperName = e.DeveloperName,
-                DeveloperSide = e.DeveloperSide,
-                DeveloperCommits = e.DeveloperCommits,
-                ProjeAdi = e.Proje.ProjeAdi,
-                ProjeId = e.ProjeId,
-                YoneticiAdi = e.Yonetici.ProjeYoneticisiAdi,
-                YoneticiId=e.YoneticiId,
-            }).ToList();
-        }
-
-        public async Task<List<DeveloperDto>> GetDeveloperWithoutYonetici()
-        {
-            var entity = await _repository.GetAll().Where(a => a.YoneticiId == null).Include(a => a.Proje).Include(q => q.User)
+            var entity = await _repository.GetAll().Where(a => a.ProjeId == id).Include(a => a.Projeler).Include(q => q.User)
                 .Include(a => a.Yonetici).ToListAsync();
 
             return entity.Select(e => new DeveloperDto
@@ -205,16 +193,36 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 DeveloperName = e.DeveloperName,
                 DeveloperSide = e.DeveloperSide,
                 DeveloperCommits = e.DeveloperCommits,
-                ProjeId=e.ProjeId,
+                //ProjeAdi = e.Projeler.ProjeAdi,
+                ProjeId = e.ProjeId,
+                YoneticiAdi = e.Yonetici.ProjeYoneticisiAdi,
+                YoneticiId = e.YoneticiId,
+            }).ToList();
+        }
+
+        public async Task<List<DeveloperDto>> GetDeveloperWithoutYonetici()
+        {
+            var entity = await _repository.GetAll().Where(a => a.YoneticiId == null).Include(a => a.Projeler).Include(q => q.User)
+                .Include(a => a.Yonetici).ToListAsync();
+
+            return entity.Select(e => new DeveloperDto
+            {
+                UserId = e.UserId,
+                DeveloperId = e.Id,
+                Username = e.User.UserName,
+                DeveloperName = e.DeveloperName,
+                DeveloperSide = e.DeveloperSide,
+                DeveloperCommits = e.DeveloperCommits,
+                ProjeId = e.ProjeId,
                 //ProjeAdi=e.Proje.ProjeAdi,
                 YoneticiId = e.YoneticiId,
                 //YoneticiAdi=e.Yonetici.ProjeYoneticisiAdi,
             }).ToList();
         }
 
-        public async Task<List<DeveloperDto>> GetDeveloperWithoutProje(int id) 
+        public async Task<List<DeveloperDto>> GetDeveloperWithoutProje(int id)
         {
-            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id&&a.ProjeId==null).Include(a => a.Proje).Include(a => a.User).ToListAsync();
+            var entity = await _repository.GetAll().Where(a => a.YoneticiId == id && a.ProjeId == null).Include(a => a.Projeler).Include(a => a.User).ToListAsync();
 
             return entity.Select(e => new DeveloperDto
             {
@@ -233,7 +241,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             var entity = await _repository.GetAll().Include(q => q.User).ToListAsync();
 
             var developerList = new List<DeveloperDropDownDto>();
-            foreach(var item in entityUser)
+            foreach (var item in entityUser)
             {
                 if (!entity.Exists(q => q.UserId == item.Id))
                 {
@@ -263,7 +271,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
             var entity = new Developer
             {
-                
+
                 UserId = input.UserId,
                 DeveloperName = input.DeveloperAdi,
                 DeveloperSide = input.DeveloperSide,
@@ -281,12 +289,12 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             await _developeralanrepository.InsertAsync(entity);
         }
 
-        public async Task DeveloperGuncelle(int id,DeveloperGuncelleDto input)
+        public async Task DeveloperGuncelle(int id, DeveloperGuncelleDto input)
         {
 
             var entity = await _repository.FirstOrDefaultAsync(id);
-            
-            if(entity == null)
+
+            if (entity == null)
             {
                 throw new UserFriendlyException("Developer bulunamadı");
             }
@@ -296,36 +304,36 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
                 {
                     input.DeveloperAdi = entity.DeveloperName;
                 }
-                if(input.DeveloperSide == null)
+                if (input.DeveloperSide == null)
                 {
                     input.DeveloperSide = entity.DeveloperSide;
                 }
                 entity.DeveloperSide = input.DeveloperSide;
-                entity.DeveloperCommits = input.DeveloperCommits;                  
+                entity.DeveloperCommits = input.DeveloperCommits;
                 await _repository.UpdateAsync(entity);
             }
-            
+
         }
         public async Task DeveloperBirak(int id)
         {
-            var entity= await _repository.FirstOrDefaultAsync(id);
-            if( entity == null)
+            var entity = await _repository.FirstOrDefaultAsync(id);
+            if (entity == null)
             {
                 throw new UserFriendlyException("Developer Bulunamadı");
             }
             entity.YoneticiId = null;
         }
 
-        public async Task DeveloperYoneticiAtama(int yoneticiId,int developerId)
+        public async Task DeveloperYoneticiAtama(int yoneticiId, int developerId)
         {
             var entity = await _repository.GetAll().Where(q => q.Id == developerId).FirstOrDefaultAsync();
             var yoneticiEntity = await _yoneticiRepository.GetAll().Where(q => q.Id == yoneticiId).FirstOrDefaultAsync();
 
-            if(entity == null)
+            if (entity == null)
             {
                 throw new UserFriendlyException("Developer bulunamadı");
             }
-            if (yoneticiEntity == null) 
+            if (yoneticiEntity == null)
             {
                 throw new UserFriendlyException("Yönetici bulunamadı");
             }
@@ -358,7 +366,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
         }
 
-        public async Task DeveloperGorevCommit(int gorevId,int devId,DevelopersCommitDto input)
+        public async Task DeveloperGorevCommit(int gorevId, int devId, DevelopersCommitDto input)
         {
             var gorevEntity = await _gorevRepository.FirstOrDefaultAsync(gorevId);
             var devEntity = await _repository.FirstOrDefaultAsync(devId);
@@ -367,7 +375,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             {
                 throw new UserFriendlyException("Görev Bulunamadı");
             }
-            if(devEntity == null)
+            if (devEntity == null)
             {
                 throw new UserFriendlyException("Developer Bulunamadı");
             }
@@ -376,13 +384,13 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
             gorevEntity.BitirmeZamani = input.BitisTarih;
             gorevEntity.DeveloperNot = input.DeveloperNot;
             devEntity.DeveloperCommits = devEntity.DeveloperCommits + 1;
-            gorevEntity.DeveloperNot=input.DeveloperNot;
+            gorevEntity.DeveloperNot = input.DeveloperNot;
             if (input.BitisTarih == DateTime.MinValue)
             {
                 gorevEntity.Durum = DurumEnum.DevamEdiyor;
 
             }
-            else if(input.BitisTarih != DateTime.MinValue)
+            else if (input.BitisTarih != DateTime.MinValue)
             {
                 gorevEntity.BitirmeZamani = DateTime.MinValue;
                 gorevEntity.Durum = DurumEnum.Tamamlandi;
