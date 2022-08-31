@@ -99,7 +99,7 @@ export class YoneticiDashboardComponent extends AppComponentBase implements OnIn
     this.router.navigateByUrl('app/profile/'+this.Id+'/1');
   }
   goMyProject(){
-    this.router.navigateByUrl('app/yonetici/yonetici-duzenle/'+this.Id);
+    this.router.navigateByUrl('app/project/'+this.Id+'/1');
   }
   goMyDeveloper(){
     this.router.navigateByUrl('app/yonetici/yonetici-duzenle/'+this.Id);

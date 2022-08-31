@@ -38,7 +38,7 @@ namespace Acme.SimpleTaskApp.MusteriDashboard
         public async Task<MusteriDashDto> GetMusteriDashboardId()
         {
             //Admin Test
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
 
             var musteri = await _musteriRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
 
@@ -50,7 +50,7 @@ namespace Acme.SimpleTaskApp.MusteriDashboard
 
         public async Task<List<ProjeDto>> GetMusteriDashboardProjeler()
         {
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
             var musteriId = await _musteriRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var projeEntity = await _projeRepository.GetAll().Where(q => q.MusteriId == musteriId.Id).Include(q => q.Musteri).Skip(0).Take(10).OrderByDescending(q => q.BaslamaTarihi).ToListAsync();
             return projeEntity.Select(e => new ProjeDto
@@ -67,7 +67,7 @@ namespace Acme.SimpleTaskApp.MusteriDashboard
 
         public async Task<List<MusteriIstekDto>> GetMusteriDashboardMusteriTalepler()
         {
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
             var musteriId = await _musteriRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var entity = await _musteriIstekRepository.GetAll().Where(q => q.MusteriId == musteriId.Id).Include(q => q.proje).Include(q => q.Musteri).ToListAsync();
             return entity.Select(e => new MusteriIstekDto
@@ -85,7 +85,7 @@ namespace Acme.SimpleTaskApp.MusteriDashboard
 
         public async Task<List<MusteriDto>> GetMusteriDashboardMusteriBilgileri()
         {
-            if (_userId == 1) _userId = 3;
+            if (_userId == 1) _userId = 4;
             var musteriId = await _musteriRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var entity = await _musteriRepository.GetAll().Where(q => q.Id == musteriId.Id).ToListAsync();
 

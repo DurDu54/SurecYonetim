@@ -3212,6 +3212,69 @@ export class ProjeServiceProxy {
     }
 
     /**
+     * @param developerId (optional) 
+     * @return Success
+     */
+    getProjelistDeveloper(developerId: number | undefined): Observable<ProjeDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Proje/getProjelistDeveloper?";
+        if (developerId === null)
+            throw new Error("The parameter 'developerId' cannot be null.");
+        else if (developerId !== undefined)
+            url_ += "developerId=" + encodeURIComponent("" + developerId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProjelistDeveloper(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProjelistDeveloper(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ProjeDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ProjeDto[]>;
+        }));
+    }
+
+    protected processGetProjelistDeveloper(response: HttpResponseBase): Observable<ProjeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProjeDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjeDto[]>(null as any);
+    }
+
+    /**
      * @param musteriId (optional) 
      * @return Success
      */
@@ -5990,7 +6053,7 @@ export class YoneticiDashboardServiceProxy {
      * @param userId (optional) 
      * @return Success
      */
-    getUserID(userId: number | undefined): Observable<User> {
+    getUserID(userId: number | undefined): Observable<UserDto> {
         let url_ = this.baseUrl + "/api/services/app/YoneticiDashboard/GetUserID?";
         if (userId === null)
             throw new Error("The parameter 'userId' cannot be null.");
@@ -6013,14 +6076,14 @@ export class YoneticiDashboardServiceProxy {
                 try {
                     return this.processGetUserID(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<User>;
+                    return _observableThrow(e) as any as Observable<UserDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<User>;
+                return _observableThrow(response_) as any as Observable<UserDto>;
         }));
     }
 
-    protected processGetUserID(response: HttpResponseBase): Observable<User> {
+    protected processGetUserID(response: HttpResponseBase): Observable<UserDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -6031,7 +6094,7 @@ export class YoneticiDashboardServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = User.fromJS(resultData200);
+            result200 = UserDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6039,7 +6102,7 @@ export class YoneticiDashboardServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<User>(null as any);
+        return _observableOf<UserDto>(null as any);
     }
 
     /**
@@ -6047,7 +6110,7 @@ export class YoneticiDashboardServiceProxy {
      * @return Success
      */
     userGuncelle(body: UserDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/YoneticiDashboard/userGuncelle";
+        let url_ = this.baseUrl + "/api/services/app/YoneticiDashboard/UserGuncelle";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

@@ -25,9 +25,9 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
   countMusteriIstek: number;
   Id : number;
   constructor(
-     injector:Injector,
-     private router: Router,
-     private _musteriServiceProxy:MusteriServiceProxy,
+    injector:Injector,
+    private router: Router,
+    private _musteriServiceProxy:MusteriServiceProxy,
     private _dashboardServiceProxy : MusteriDashboardServiceProxy,
     private _modalService: BsModalService,
     ) {
@@ -79,11 +79,13 @@ export class MusteriDashboardComponent extends AppComponentBase implements OnIni
       }
     )
   }
+
+  // sayfa yönlendirme fonksiyonları
   goMyProfile(){
     this.router.navigateByUrl('app/profile/'+this.Id+'/2');
   }
   goMyProject(){
-    console.log("Projeye Gidildi")
+    this.router.navigateByUrl('app/project/'+this.Id+'/2');
   }
   goMyDeveloper(){
     console.log("Projeye Gidildi")

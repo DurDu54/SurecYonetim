@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { User, UserDto, UserServiceProxy, YoneticiDashboardServiceProxy, YoneticiDto, YoneticiGuncelleDto, YoneticiServiceProxy } from '@shared/service-proxies/service-proxies';
+import { DeveloperDto, DevelopersServiceProxy, MusteriDto, MusteriServiceProxy, User, UserDto, UserServiceProxy, YoneticiDashboardServiceProxy, YoneticiDto, YoneticiGuncelleDto, YoneticiServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
@@ -15,22 +15,28 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
 
   @Output() onSave=new EventEmitter<any>();
   saving=false;
+  iletisim : string;
+  aciklama: string;
+  
   id:number;
   rolid:number;
   userid:number;
+
   updateYonetici:NgForm;
-  yoneticiDetails=new YoneticiDto;
   yoneticiGuncelle:YoneticiGuncelleDto;
-  userDetails:User;
-  userUpdate : UserDto;
+
+  userDetail:UserDto;
+  yoneticiDetails = new YoneticiDto;
+  musteriDetails = new MusteriDto;
+  developerDetails = new DeveloperDto;
 
   constructor
   (
     injector:Injector,
     private _yoneticiServiceProxy:YoneticiServiceProxy,
     private _yoneticiDashService:YoneticiDashboardServiceProxy,
-    private _userServiceProxy:UserServiceProxy,
-    private _modalService:BsModalService,
+    private _musteriServiceProxy:MusteriServiceProxy,
+    private _developerServiceProxy:DevelopersServiceProxy,
     private route:ActivatedRoute
     
   ) {
@@ -39,19 +45,41 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     
-    this.userDetails=new User();
-    this.userUpdate=new UserDto();
+    this.userDetail=new UserDto();
     this.yoneticiGuncelle=new YoneticiGuncelleDto();
     this.id=this.route.snapshot.params['id'];
-    this.rolid=this.route.snapshot.params['rolid']
+    this.rolid=this.route.snapshot.params['rolid'];
     if(this.rolid==1){
-      this.getMyProfile(this.id)
+      this.getMyProfileYonetici(this.id);
+    }
+    if (this.rolid==2){
+      this.getMyProfileMusteri(this.id);
+    }
+    if(this.rolid==3){
+      this.getMyProfileDeveloper(this.id);
     }
 
   }
-  getMyProfile(id:number){
+  
+  getMyProfileMusteri(id: number) {
+    this._musteriServiceProxy.getMusteriById(id).subscribe((res)=>{
+      this.musteriDetails=res;
+      this.aciklama=this.musteriDetails.aciklama;
+      this.iletisim=this.musteriDetails.iletisim;
+      this.userid=this.musteriDetails.userId;
+      this.userBilgileriGetir(this.userid);
+    });
+  }
+  
+  getMyProfileDeveloper(id: number) {
+    throw new Error('Method not implemented.');
+  }
+
+  getMyProfileYonetici(id:number){
     this._yoneticiServiceProxy.getYoneticiByYoneticiId(id).subscribe((res)=>{
       this.yoneticiDetails=res;
+      this.aciklama=this.yoneticiDetails.aciklama;
+      this.iletisim = this.yoneticiDetails.iletisim;
       this.userid=this.yoneticiDetails.userId;
       this.userBilgileriGetir(this.userid);
     });
@@ -59,11 +87,31 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
   }
   userBilgileriGetir(userId:number){
     this._yoneticiDashService.getUserID(userId).subscribe((res)=>{
-      this.userDetails=res;
+      this.userDetail=res;
+     
+
     });
   }
 
- save(){
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  save(){
   if(this.rolid==1){
     this.saveyonetici()
   }
@@ -87,7 +135,7 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
 
     this.saving=true;
     let inputYonetici=this.yoneticiGuncelle;
-    let inputUser = this.userUpdate;
+    let inputUser = this.userDetail;
     this._yoneticiServiceProxy.yoneticiGuncelle(this.id,inputYonetici).subscribe(
       ()=>{
         this.notify.info(this.l('Saved Succesful'));
@@ -111,8 +159,5 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
     )
   }
 
-}
-function elseif() {
-  throw new Error('Function not implemented.');
 }
 

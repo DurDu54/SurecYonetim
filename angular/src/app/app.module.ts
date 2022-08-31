@@ -74,6 +74,7 @@ import { GorevDurumEkleComponent } from './durum/gorev-durum-ekle/gorev-durum-ek
 import { YoneticiDashboardComponent } from './yonetici-dashboard/yonetici-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
+import { ProjectComponent } from './project/project.component';
 
 
  
@@ -152,6 +153,7 @@ import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard
       YoneticiDashboardComponent,
       ProfileComponent,
       MusteriDashboardComponent,
+      ProjectComponent,
 
   ],
   imports: [

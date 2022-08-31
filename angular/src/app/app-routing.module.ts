@@ -26,6 +26,7 @@ import { DurumComponent } from './durum/durum.component';
 import { YoneticiDashboardComponent } from './yonetici-dashboard/yonetici-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
+import { ProjectComponent } from './project/project.component';
 
 
 @NgModule({
@@ -51,13 +52,14 @@ import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
                     { path: 'developer/developer-duzenle/:id', component: DeveloperDuzenleComponent, canActivate: [AppRouteGuard] },
-
                     {path:'musteri/musteri-duzenle/:id',component:MusteriDuzenleComponent,canActivate:[AppRouteGuard]},
                     {path:'yonetici/yonetici-duzenle/:id',component:YoneticiDuzenleComponent,canActivate:[AppRouteGuard]},
                     {path:'gorev/gorev-duzenle/:id',component:GorevDuzenleComponent,canActivate:[AppRouteGuard]},
 
-                    
                     { path:'profile/:id/:rolid',component:ProfileComponent,canActivate:[AppRouteGuard] },
+                    { path:'project/:id/:rolid',component:ProjectComponent,canActivate:[AppRouteGuard] },
+
+
                     { path:'musteri/musteri-duzenle/:id',component:MusteriDuzenleComponent,canActivate:[AppRouteGuard] },
                     { path:'yonetici/yonetici-duzenle/:id/:rolid',component:YoneticiDuzenleComponent,canActivate:[AppRouteGuard] },
                     { path:'proje/proje-duzenle/:id',component:ProjeDuzenleComponent,canActivate:[AppRouteGuard] },    

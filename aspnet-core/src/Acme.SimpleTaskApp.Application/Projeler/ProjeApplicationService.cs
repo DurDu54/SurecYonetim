@@ -43,6 +43,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
              */
             var getList = await _repository.GetAll().Where(q=>q.IsDone==false).Include(a=>a.Musteri).ThenInclude(a=>a.User).Skip(0).Take(15).ToListAsync();
             var getSingle = getList.FirstOrDefault();
+            
             return getList.Select(e => new ProjeDto
             {
                 ProjeId = e.Id,
@@ -57,6 +58,27 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
 
         }
 
+
+        public async Task<List<ProjeDto>> getProjelistDeveloper(int developerId)
+        {
+            var entity = await _developerRepository.GetAll().Where(q => q.Id == developerId).Include(q => q.Proje).FirstOrDefaultAsync();
+            int id = (int)entity.ProjeId;
+            var projem = await _repository.GetAll().Where(q => q.Id == id).Skip(0).Take(15).ToListAsync();
+
+            return projem.Select(e => new ProjeDto
+            {
+
+                ProjeId = e.Id,
+                ProjeAdi = e.ProjeAdi,
+                BaslamaTarihi = e.BaslamaTarihi,
+                BitisTarihi = e.BitisTarihi,
+                Description = e.Description,
+
+                ProjeDurum = e.ProjeDurum,
+
+
+            }).ToList();
+        }
 
         //Müşteri için Proje görüntüleme tablosu
 
