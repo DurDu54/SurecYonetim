@@ -25,10 +25,11 @@ namespace Acme.SimpleTaskApp.DeveloperDashboard
         private readonly IAbpSession _session;
         private long _userId;
 
-        public DeveloperDashboardAppService(IRepository<Proje> projeRepository, IRepository<Gorev> gorevRepository, IAbpSession session)
+        public DeveloperDashboardAppService(IRepository<Proje> projeRepository, IRepository<Gorev> gorevRepository,IRepository<Developer> repository, IAbpSession session)
         {
             _projeRepository = projeRepository;
             _gorevRepository = gorevRepository;
+            _developerRepository = repository;
             _session = session;
             _userId = (long)session.UserId;
         }
