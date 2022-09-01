@@ -35,15 +35,17 @@ namespace Acme.SimpleTaskApp.DeveloperDashboard
         }
         public async Task<DeveloperDashDto> GetDeveloperDashboardId()
         {
-            if (_userId == 1) _userId = 5;
+            if (_userId == 1) _userId = 4;
             var developer = await _developerRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
+            
             var developerDto = new DeveloperDashDto();
+            
             developerDto.DeveloperId = developer.Id;
             return developerDto;
         }
         public async Task<List<GorevDto>> GetDeveloperDashboardGorevler()
         {
-            if (_userId == 1) _userId = 5;
+            if (_userId == 1) _userId = 4;
             var developerId = await _developerRepository.GetAll().Where(q => q.UserId == _userId).FirstOrDefaultAsync();
             var gorevEntity = await _gorevRepository.GetAll().Where(q => q.DeveloperId == developerId.Id).ToListAsync();
             return gorevEntity.Select(e => new GorevDto
@@ -60,15 +62,19 @@ namespace Acme.SimpleTaskApp.DeveloperDashboard
 
         public async Task<List<ProjeDto>> GetDeveloperDashboardProjeler()
         {
+            if (_userId==1) _userId = 4;
+            
+            
             if (!_session.UserId.HasValue)
             {
                 throw new UserFriendlyException("Kullanici Girişi Yapılmamış");
             }
             var ls = await _projeRepository.GetAll()
-                  .Where(a => a.Developerlar.Any(d => d.UserId == _session.UserId))
+                  .Where(a => a.Developerlar.Any(d => d.UserId==_userId ))
                   .ToListAsync();
             return ls.Select(d => new ProjeDto
             {
+                ProjeAdi=d.ProjeAdi,
                 BaslamaTarihi = d.BaslamaTarihi,
                 BitisTarihi = d.BitisTarihi,
                 Description =d.Description,

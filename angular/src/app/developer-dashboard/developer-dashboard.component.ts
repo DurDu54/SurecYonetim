@@ -13,9 +13,9 @@ export class DeveloperDashboardComponent extends AppComponentBase implements OnI
   @Output() onSave = new EventEmitter<any>();
   projeler : ProjeDto[]=[];
   gorevler : GorevDto[]=[];
-  developerDetails = new DeveloperDto;
+  developerDetails = new DeveloperDto();
   developerGuncelle : DeveloperGuncelleDto;
-  developer = new DeveloperDashDto;
+  developer  = new DeveloperDashDto;
   countProje : number;
   countGorev : number;
   Id:number;
@@ -30,15 +30,20 @@ export class DeveloperDashboardComponent extends AppComponentBase implements OnI
      }
 
   ngOnInit(): void {
+
     this._dashboardServiceProxy.getDeveloperDashboardId().subscribe(
       (res)=>{
-        this.developer;
+        this.developer=res;
         console.log(res);
         console.log(this.developer);
         const id = this.developer.developerId;
         this.Id = this.developer.developerId;
+        this.getMiniProfile(this.Id);
+        
       }
     )
+        this.getProjeler();
+        this.getGorevler();
   }
 
   getMiniProfile(id : number){

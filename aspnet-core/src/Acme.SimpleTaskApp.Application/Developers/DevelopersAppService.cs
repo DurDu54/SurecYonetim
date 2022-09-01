@@ -122,6 +122,7 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
         }
         public async Task<DeveloperDto> GetDeveloperByDeveloperId(int id)
         {
+
             var entity = await _repository.GetAll().Where(a => a.Id == id).Include(a => a.Projeler).Include(a => a.Yonetici).Include(a => a.User).FirstOrDefaultAsync();
             if (entity == null)
             {
@@ -138,8 +139,11 @@ namespace Acme.SimpleTaskApp.Projeler.Developers
 
             if (entity.ProjeId == null || entity.ProjeId == 0)
             {
-                developer.ProjeId = 0;
-                developer.ProjeAdi = "Proje Yok";
+                developer.Projeler = entity.Projeler.Select(p => new DeveloperProjectsDto
+                {
+                    Adi = p.ProjeAdi,
+                    ProjectId = p.Id
+                }).ToList();
             }
             else if (entity.ProjeId != null && entity.ProjeId > 0)
             {
