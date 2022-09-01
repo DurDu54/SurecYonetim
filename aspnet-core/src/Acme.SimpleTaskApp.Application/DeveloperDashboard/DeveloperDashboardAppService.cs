@@ -51,6 +51,7 @@ namespace Acme.SimpleTaskApp.DeveloperDashboard
             return gorevEntity.Select(e => new GorevDto
             {
                 GorevId = e.Id,
+                GorevTanimi=e.GorevTanimi,
                 GorevAciklama = e.GorevAciklama,
                 GorevDurum = e.GorevDurum,
                 DeveloperName = e.DeveloperName,
