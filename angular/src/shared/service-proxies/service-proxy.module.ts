@@ -20,6 +20,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.YoneticiServiceProxy,
         ApiServiceProxies.YoneticiDashboardServiceProxy, 
         ApiServiceProxies.MusteriDashboardServiceProxy,
+        ApiServiceProxies.DeveloperDashboardServiceProxy,
 
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]

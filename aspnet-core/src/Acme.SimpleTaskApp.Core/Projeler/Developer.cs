@@ -21,7 +21,7 @@ namespace Acme.SimpleTaskApp.Projeler
         public int DeveloperCommits { get; set; }
 
         public User User { get; set; }
-        [ForeignKey(nameof(UserId))]
+        
         public long UserId { get; set; }
 
         public ProjeYonetici Yonetici { get; set; }

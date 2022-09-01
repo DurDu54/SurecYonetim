@@ -27,6 +27,7 @@ import { YoneticiDashboardComponent } from './yonetici-dashboard/yonetici-dashbo
 import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
 import { ProjectComponent } from './project/project.component';
+import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ProjectComponent } from './project/project.component';
                     { path: 'proje', component: ProjeComponent, data: { permission: 'Pages.Proje' }, canActivate: [AppRouteGuard] },
                     { path: 'yonetici-dashboard', component: YoneticiDashboardComponent, data: { permission: 'Pages.Deneme' }, canActivate: [AppRouteGuard] },
                     { path: 'musteri-dashboard', component: MusteriDashboardComponent, data: { permission: 'Pages.Deneme' }, canActivate: [AppRouteGuard] },
+                    { path: 'developer-dashboard', component: DeveloperDashboardComponent, data: { permission: 'Pages.Deneme' }, canActivate: [AppRouteGuard] },
                     { path: 'gorev', component: GorevComponent, data: { permission: 'Pages.Gorev' }, canActivate: [AppRouteGuard] },
                     { path: 'developer', component: DeveloperComponent, data: { permission: 'Pages.Developer' }, canActivate: [AppRouteGuard] },
                     { path: 'musteri', component: MusteriComponent, data: { permission: 'Pages.Musteri' }, canActivate: [AppRouteGuard] },

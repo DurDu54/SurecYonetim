@@ -1,0 +1,202 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{countProje}}</h3>
+            <p>Projelerim</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/stargazers" class="small-box-footer"
+            target="_blank">
+            More info
+            <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="small-box  bg-danger" >
+          <div class="inner">
+            <h3 style="color: #ffffff;">{{countGorev}}</h3>
+            <p style="color: #ffffff;">Gorevler</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-server"></i>
+          </div>
+          <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/network/members" class="small-box-footer"
+            target="_blank" style="color: #ffffff !important;">
+            More info
+            <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini Profil  Ve Takvim-->
+    <div class="row">
+      <!-- Mini Profile -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title " style="float: left; font-size: 30px">Mini Profil</h3>
+            <a href="javascript:;" style="float:right;" class="btn bg-blue" (click)="goMyProfile()">
+              <i class="fa fa-address-card"></i>
+              {{ " Profilim" | localize }}
+          </a>
+          </div>
+          <div class="card-body table-responsive " style="overflow-y:hidden ; height: 200px;">
+
+            <div class="row mb-0">
+              <div class="col-3">
+                <img class="image " src="assets/img/user.png"
+                  style="height:150px; border-radius: 50%; border: 5px solid #050400;">
+              </div>
+              <div class="card col-9" style="background-color:#fdfdfdf3 ;">
+                <div class="form-group justify-content col-12">
+                  <div class="row ">
+                    <label class="col-md-3 col-form-label" style="margin-top: 20px ;" for="name">
+                      {{ "Kullanıcı Adı :" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                      <input type="text " style="margin : 3px; margin-top: 20px;" class="form-control" name="userName"
+                        id="userName" required maxlength="32" value="{{developerDetails.developerName}}" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-3 col-form-label" for="name">
+                      {{ "Açiklama :" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                      <input type="text " style="margin : 3px;" class="form-control" name="userName" id="userName"
+                        required maxlength="32" value="{{developerDetails.developerSide}}" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-3 col-form-label" for="name">
+                      {{ "İletişim :" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                      <input type="text " style="margin : 3px;" class="form-control" name="userName" id="userName"
+                        required maxlength="32" value="{{developerDetails.developerCommits}}" readonly>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Takvim -->
+      <!-- <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title" style="font-size: 30px">Takvim</h3>
+            <a href="javascript:;" style="float:right;" class="btn bg-blue" (click)="goMyProfile()">
+              <i class="fa fa-user"></i>
+              {{ "Profilim" | localize }}
+            </a>
+          </div>
+          <div class="card-body table-responsive p-0" style="overflow-y:hidden scroll; height: 200px;">
+            <table class="table table-hover text-nowrap table-borderless">
+              <thead class="bg-light" style="position: sticky; top: 0; z-index: 99;">
+                <tr>
+                  <th class="w-25">Adı</th>
+                  <th class="w-25">Uzmanlığı</th>
+                  <th class="w-25">Commit Sayısı</th>
+                  <th class="w-25">Projesi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let developer of developerlar">
+                  <td>{{developer.developerName}}</td>
+                  <td>{{developer.developerSide}}</td>
+                  <td>{{developer.developerCommits}}</td>
+                  <td>{{developer.projeId}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <!-- Proje Listesi -->
+    <div class="row ">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title" style="font-size: 30px">Proje Listesi</h3>
+              <a href="javascript:;" style="float:right;" class="btn bg-blue" (click)="goMyProject()">
+                <i class="fa fa-folder-open"></i>
+                {{ "Projeler" | localize }}
+              </a>
+              <abp-pagination-controls style="float: right; margin-right: 1rem;" id="server">
+              </abp-pagination-controls>
+            </div>
+            <div class="card-body table-responsive p-0" style="overflow-y:hidden scroll; height: 200px;">
+              <table class="table table-hover text-nowrap table-borderless">
+                <thead class="bg-light" style="position: sticky; top: 0; z-index: 99;">
+                  <tr>
+                    <th >Proje Adı</th>
+                    <th >Açıklama</th>
+                    <th >Durum</th>
+                    <th>Müşteri Adı</th>
+                    <th >Başlama Tarihi</th>
+                  </tr>
+              </thead>
+                <tbody>
+                  <tr *ngFor="let proje of projeler">
+                    <td>{{proje.projeAdi}}</td>
+                    <td>{{proje.description}}</td>
+                    <td>{{proje.projeDurum}}</td>
+                    <td>{{proje.musteriAdi}}</td>
+                    <td>{{proje.baslamaTarihi}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+    <!-- Görevler-->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title" style="font-size: 30px">Görevler</h3>
+            <a href="" style="float:right;" class="btn bg-blue" >
+              <i class="fa fa-servers"></i>
+              {{ "Görevler" | localize }}
+            </a>
+            <abp-pagination-controls style="float: right; margin-right: 1rem;" id="server">
+            </abp-pagination-controls>
+          </div>
+          <div class="card-body table-responsive p-0" style="overflow-y:hidden scroll; height: 200px;">
+            <table class="table table-hover text-nowrap table-borderless">
+              <thead class="bg-light" style="position: sticky; top: 0; z-index: 99;">
+                <tr>
+                  <th class="w-25">Görev Tanımı</th>
+                  <th class="w-25">Görev Durumu</th>
+                  <th>Başlama Tarihi</th>
+                  <th>Proje Adı</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let gorev of gorevler">
+                  <td>{{gorev.gorevTanimi}}</td>
+                  <td>{{gorev.gorevDurum}}</td>
+                  <td>{{gorev.gorevAciklama}}</td>
+                  <td>{{gorev.baslamaTarihi}}</td>
+                  <td>{{gorev.projeAdi}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

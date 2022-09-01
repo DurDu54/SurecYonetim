@@ -75,6 +75,7 @@ import { YoneticiDashboardComponent } from './yonetici-dashboard/yonetici-dashbo
 import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
 import { ProjectComponent } from './project/project.component';
+import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
 
 
  
@@ -154,6 +155,7 @@ import { ProjectComponent } from './project/project.component';
       ProfileComponent,
       MusteriDashboardComponent,
       ProjectComponent,
+      DeveloperDashboardComponent,
 
   ],
   imports: [
