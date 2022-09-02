@@ -161,7 +161,7 @@ namespace Acme.SimpleTaskApp.Projeler.Gorevler
                 BaslamaZamani = e.BaslamaZamani,
                 BitirmeZamani = e.BitirmeZamani,
                 DeveloperId = e.DeveloperId,
-                //DeveloperName = e.Developer.DeveloperName,
+                DeveloperName = e.Developer.DeveloperName,
                 DeveloperNot = e.DeveloperNot,
                 GorevDurum = e.GorevDurum,
             }).ToList();

@@ -28,6 +28,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
 import { ProjectComponent } from './project/project.component';
 import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
+import { DevelopersComponent } from './developers/developers.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { RequestComponent } from './request/request.component';
 
 
 @NgModule({
@@ -60,6 +63,9 @@ import { DeveloperDashboardComponent } from './developer-dashboard/developer-das
 
                     { path:'profile/:id/:rolid',component:ProfileComponent,canActivate:[AppRouteGuard] },
                     { path:'project/:id/:rolid',component:ProjectComponent,canActivate:[AppRouteGuard] },
+                    { path:'developers/:id/:rolid',component:DevelopersComponent,canActivate:[AppRouteGuard] },
+                    { path:'tasks/:id/:rolid',component:TasksComponent,canActivate:[AppRouteGuard] },
+                    { path:'request/:id/:rolid',component:RequestComponent,canActivate:[AppRouteGuard] },
 
 
                     { path:'musteri/musteri-duzenle/:id',component:MusteriDuzenleComponent,canActivate:[AppRouteGuard] },

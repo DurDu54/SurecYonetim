@@ -1,10 +1,9 @@
-
 <div>
     <section class="content-header">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <h1>{{ "My Project" | localize }}</h1>
+            <h1>{{ "Customer Request" | localize }}</h1>
           </div>
         </div>
       </div>
@@ -13,7 +12,7 @@
         <div class="col-12 ">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title" style="font-size: 30px">Proje Listesi</h3>
+                <h3 class="card-title" style="font-size: 30px">Taleplerim</h3>
                 <a id="buton1" href="javascript:;" style="float:right; margin-right: 10px;" class="btn bg-success">
                   <i class="fa fa-plus-square"></i>
                   {{ "Create" | localize }}
@@ -25,19 +24,17 @@
                   <thead class="bg-light" style="position: sticky; top: 0; z-index: 99;">
                     <tr>
                       <th >Proje Adı</th>
-                      <th >Açıklama</th>
-                      <th >Durum</th>
-                      <th >Müşteri Adı</th>
-                      <th >Başlama Tarihi</th>
+                      <th >İstek Adı</th>
+                      <th >İstek Açıklaması</th>
+                      <th >İstek Sahibi</th>
                     </tr>
                 </thead>
                   <tbody>
-                    <tr *ngFor="let proje of projeler">
-                      <td>{{proje.projeAdi}}</td>
-                      <td>{{proje.description}}</td>
-                      <td>{{proje.projeDurum}}</td>
-                      <td>{{proje.musteriAdi}}</td>
-                      <td>{{proje.baslamaTarihi}}</td>
+                    <tr *ngFor="let request of requests">
+                      <td>{{request.projeAdi}}</td>
+                      <td>{{request.musteriIstek}}</td>
+                      <td>{{request.musteriAciklama}}</td>
+                      <td>{{request.musteriAdi}}</td>
                     </tr>
                   </tbody>
                 </table>

@@ -76,15 +76,9 @@ export class DeveloperDashboardComponent extends AppComponentBase implements OnI
   goMyProject(){
     this.router.navigateByUrl('app/project/'+this.Id+'/2');
   }
-  goMyDeveloper(){
-    console.log("Projeye Gidildi")
-  }
   goMyTasks(){
-    console.log("Projeye Gidildi")
-  }
-  goMyCustomerTasks(){
-    console.log("Projeye Gidildi")
-  }
+    this.router.navigateByUrl('app/tasks/'+this.Id+'/2');
+    }
 
 
 }

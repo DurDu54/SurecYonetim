@@ -76,6 +76,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { MusteriDashboardComponent } from './musteri-dashboard/musteri-dashboard.component';
 import { ProjectComponent } from './project/project.component';
 import { DeveloperDashboardComponent } from './developer-dashboard/developer-dashboard.component';
+import { DevelopersComponent } from './developers/developers.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { RequestComponent } from './request/request.component';
 
 
  
@@ -156,6 +159,9 @@ import { DeveloperDashboardComponent } from './developer-dashboard/developer-das
       MusteriDashboardComponent,
       ProjectComponent,
       DeveloperDashboardComponent,
+      DevelopersComponent,
+      TasksComponent,
+      RequestComponent,
 
   ],
   imports: [

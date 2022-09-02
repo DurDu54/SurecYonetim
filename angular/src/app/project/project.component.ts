@@ -15,16 +15,12 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
 
   id:number;
   rolid:number;
-  userid:number;
 
   projeler:ProjeDto[]=[];
 
   constructor(
     injector:Injector,
     private route: ActivatedRoute,
-    private _yoneticiServiceProxy : YoneticiServiceProxy,
-    private _musteriServiceProxy : MusteriServiceProxy,
-    private _developerServiceProxy : DevelopersServiceProxy,
     private _projeServiceProxy : ProjeServiceProxy,
   ) {
     super(injector);
@@ -33,15 +29,19 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   ngOnInit(): void {
 
     this.id = this.route.snapshot.params['id'];
-    this.rolid = this.route.snapshot.params['rolid']
+    this.rolid = this.route.snapshot.params['rolid'];
+    const buton1 = document.getElementById("buton1");
+
     if(this.rolid==1){
       this.getMyProjectYonetici(this.id);
     }
     if (this.rolid==2){
       this.getMyProjectMusteri(this.id);
+      buton1.style.display="none";
     }
     if(this.rolid==3){
       this.getMyProjectDeveloper(this.id);
+      buton1.style.display="none";
     }
 
   }

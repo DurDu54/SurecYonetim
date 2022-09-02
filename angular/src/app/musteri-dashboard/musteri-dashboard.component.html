@@ -133,8 +133,6 @@
                 <i class="fa fa-folder-open"></i>
                 {{ "Projeler" | localize }}
               </a>
-              <abp-pagination-controls style="float: right; margin-right: 1rem;" id="server">
-              </abp-pagination-controls>
             </div>
             <div class="card-body table-responsive p-0" style="overflow-y:hidden scroll; height: 200px;">
               <table class="table table-hover text-nowrap table-borderless">
@@ -158,6 +156,11 @@
                 </tbody>
               </table>
             </div>
+            <hr>
+              <div class="card-footer " class=" mx-auto" style="position: relative; top: -0.5rem;">
+                <abp-pagination-controls id="server" >
+                </abp-pagination-controls>
+              </div>
           </div>
         </div>
     </div>
@@ -168,12 +171,10 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title" style="font-size: 30px">Müşteri Talepleri</h3>
-            <a href="" style="float:right;" class="btn bg-blue" >
+            <a href="javascript:;" style="float:right;" class="btn bg-blue" (click)="goMyRequest()" >
               <i class="fa fa-servers"></i>
               {{ "Müşteri Talepleri" | localize }}
             </a>
-            <abp-pagination-controls style="float: right; margin-right: 1rem;" id="server">
-            </abp-pagination-controls>
           </div>
           <div class="card-body table-responsive p-0" style="overflow-y:hidden scroll; height: 200px;">
             <table class="table table-hover text-nowrap table-borderless">
@@ -195,6 +196,11 @@
               </tbody>
             </table>
           </div>
+          <hr>
+              <div class="card-footer " class=" mx-auto" style="position: relative; top: -0.5rem;">
+                <abp-pagination-controls id="server" >
+                </abp-pagination-controls>
+              </div>
         </div>
       </div>
     </div>
