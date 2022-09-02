@@ -71,13 +71,13 @@ export class DeveloperDashboardComponent extends AppComponentBase implements OnI
     )
   }
   goMyProfile(){
-    this.router.navigateByUrl('app/profile/'+this.Id+'/2');
+    this.router.navigateByUrl('app/profile/'+this.Id+'/3');
   }
   goMyProject(){
-    this.router.navigateByUrl('app/project/'+this.Id+'/2');
+    this.router.navigateByUrl('app/project/'+this.Id+'/3');
   }
   goMyTasks(){
-    this.router.navigateByUrl('app/tasks/'+this.Id+'/2');
+    this.router.navigateByUrl('app/tasks/'+this.Id+'/3');
     }
 
 

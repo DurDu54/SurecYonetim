@@ -72,7 +72,13 @@ export class ProfileComponent extends AppComponentBase implements OnInit {
   }
   
   getMyProfileDeveloper(id: number) {
-    throw new Error('Method not implemented.');
+    this._developerServiceProxy.getDeveloperByDeveloperId(id).subscribe((res)=>{
+    this.developerDetails=res;
+    //this.aciklama=this.developerDetails.aciklama;
+    //this.iletisim=this.developerDetails.iletisim;
+    this.userid=this.developerDetails.userId;
+    this.userBilgileriGetir(this.userid);
+  });
   }
 
   getMyProfileYonetici(id:number){

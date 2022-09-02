@@ -30,8 +30,8 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     if(this.rolid == 1){
       this.getTasksYonetici(this.id);
     }
-    if(this.rolid == 2){
-      this.getTasksDeveloper(this.id);
+    if(this.rolid == 3){
+      this.getTasksDeveloper();
     }
   }
 
@@ -42,10 +42,12 @@ export class TasksComponent extends AppComponentBase implements OnInit {
       this.tasks = res;
     })
   }
-  getTasksDeveloper(id : number){
-    this.taskServiceProxy.getGorevByDeveloper(id).
-    subscribe((res)=>{
-      this.tasks = res;
-    })
+  getTasksDeveloper(){
+    this.taskServiceProxy.getGorevByDeveloper(this.id)
+    .subscribe(
+      (res)=>{
+        this.tasks=res;
+      }
+    )
   }
 }
