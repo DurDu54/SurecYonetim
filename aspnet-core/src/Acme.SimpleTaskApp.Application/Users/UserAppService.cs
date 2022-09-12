@@ -21,6 +21,7 @@ using Acme.SimpleTaskApp.Authorization.Users;
 using Acme.SimpleTaskApp.Projeler;
 using Acme.SimpleTaskApp.Roles.Dto;
 using Acme.SimpleTaskApp.Users.Dto;
+using Acme.SimpleTaskApp.Yoneticiler.YoneticilerDto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

@@ -72,6 +72,19 @@ namespace Acme.SimpleTaskApp.YoneticiDashboard
 			}; 
   
 		}
+		// burada user olşuşturup sonra yönetici oluşturulacak 
+		//public async Task createUser (CreateUserDto user)
+  //      {
+		//	var entity = new User
+		//	{
+		//		Id = 0,
+  //              Name = user.Name,
+		//		Surname=user.Surname,
+
+  //          };
+  //          await _userRepository.InsertAsync(entity);
+
+		//}
 		public async Task UserGuncelle(UserDto input)
 		{
 			var user = await _userManager.GetUserByIdAsync(input.Id);

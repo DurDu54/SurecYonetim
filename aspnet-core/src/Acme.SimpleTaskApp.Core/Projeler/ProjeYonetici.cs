@@ -17,6 +17,7 @@ namespace Acme.SimpleTaskApp.Projeler
 
         public string Iletisim { get; set; }
         public string Aciklama { get; set; }
+        public int FalanId { get; set; }
 
     }
 }

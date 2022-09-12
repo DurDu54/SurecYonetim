@@ -30,8 +30,7 @@ namespace Acme.SimpleTaskApp.Projeler.Projeler
             _projeDurumRepo = projedurum;
         }
 
-
-
+        
 
         public async Task<List<ProjeDto>> GetProjeList()
         {
